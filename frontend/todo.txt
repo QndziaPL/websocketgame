@@ -1,0 +1,3 @@
+TODO: block movements of player when touches obstacle
+TODO: interaction of collision between projectile and obstacle
+TODO: think how to implement enemy movement around obstacles
