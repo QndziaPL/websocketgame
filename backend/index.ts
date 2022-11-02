@@ -1,15 +1,39 @@
-import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import {Server, Socket} from "socket.io";
+import {ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData} from "../frontend/src/types/socket/socket";
+import {MessageEventType} from "../frontend/src/types/socket/messageEventType";
+import {GameStatus} from "../frontend/src/types/types"
 
 dotenv.config();
 
-const app: Express = express();
-const port = process.env.PORT;
+const port: number = process.env.PORT ? Number(process.env.port) : 80
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server');
+let countdown = 100
+
+const io = new Server<
+    ClientToServerEvents,
+    ServerToClientEvents,
+    InterServerEvents,
+    SocketData
+    >(port ?? 4000, {
+        cors: {
+            origin: "http://localhost:3000"
+        }
 });
 
-app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+const gameObject = {
+    gameStatus: GameStatus.PAUSED
+}
+
+const startGameLoop = () => {
+    while (gameObject.gameStatus === GameStatus.RUNNING){
+
+    }
+}
+
+io.on('connection', (socket) => {
+    startGameLoop()
+    socket.emit(MessageEventType.COUNTDOWN, countdown)
+    // io.emit("eventEmit", Event.COUNTDOWN, {countdown})
 });
+
