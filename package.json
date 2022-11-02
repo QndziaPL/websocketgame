@@ -1,0 +1,19 @@
+{
+  "name": "websocketgame",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com-qndzia:QndziaPL/websocketgame.git",
+  "author": "Rogacewicz, Maksymilian (External) <m.rogacewicz_external@wartsila.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^6.0.1",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "start": "lerna run --parallel start"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
