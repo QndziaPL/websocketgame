@@ -33,7 +33,7 @@ const io = new Server<
 
 
 const startGameLoop = () => {
-
+    console.log("jebać kurwy")
 }
 
 io.on('connection', (socket) => {
