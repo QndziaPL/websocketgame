@@ -2390,17 +2390,17 @@
     read-package-json-fast "^2.0.3"
     which "^2.0.2"
 
-"@nrwl/cli@15.0.6":
-  version "15.0.6"
-  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-15.0.6.tgz#f389192f4c88735b3fa0f39939bf38465430f665"
-  integrity sha512-ckNPeEseK7rdYKYPiVMp368G5lLKp8dYrAg6dcKNqi7+UCPDAfdk5BW9VCVDV5bQw1D5UVQbUaq6AWJFkqC+vQ==
+"@nrwl/cli@15.0.7":
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-15.0.7.tgz#255f88b5a2c3c203ccf6b619fc205f5e76366c4a"
+  integrity sha512-qj1HuktNRMGGlzI5EXdneQ5+E7p0rdQQMRwiDodaFNTMko7ntH6A62hgq/fTcxmADJyqD31KS+1CvmiMKcof8A==
   dependencies:
-    nx "15.0.6"
+    nx "15.0.7"
 
 "@nrwl/devkit@>=14.8.6 < 16":
-  version "15.0.6"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.0.6.tgz#b3a4eaabadd08cf0e037d6efe194663d68344080"
-  integrity sha512-8hxmxIvD53J9dxEQ3iYZv8sd1ii78btXUBVCTfKtzaymysmmoFajpznJ0S+YQB8rCx7A5CKY7jMJ0Q4jFBr5ew==
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.0.7.tgz#1ecc793e9ef233b36c9d3a1a7f3bcd625c10ea1c"
+  integrity sha512-VNhtirB5hkfGqsLk2miXIJFSgs/wyhsVOT2xjHpwFQ+oaE8VAgPlJc/rHWjOmRbMRAG9D49VnLpAo8vai562ZQ==
   dependencies:
     "@phenomnomnominal/tsquery" "4.1.1"
     ejs "^3.1.7"
@@ -2408,12 +2408,12 @@
     semver "7.3.4"
     tslib "^2.3.0"
 
-"@nrwl/tao@15.0.6":
-  version "15.0.6"
-  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-15.0.6.tgz#57eccf89b398e16e672a52c6b342988228015a6d"
-  integrity sha512-O6Fv1Uq+ul/egO8pGU8R1ei+oemugGfqR3/uGR6lwdyslEo1+CrirjhoHmbmFY7Kc+hZ7wjK8fAfV51tQY8QyQ==
+"@nrwl/tao@15.0.7":
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-15.0.7.tgz#0206e1f5fc0d42f7c9d764dac4024d8bd3f9b2cf"
+  integrity sha512-cnK2jlYoseIbYg7hmzC2eSCHmXXBqh4qmQzXonu6y17u+S5jUTSlaQp1f+q/Ah8mJpqQTrHzR+qU5UbnqGQUFQ==
   dependencies:
-    nx "15.0.6"
+    nx "15.0.7"
 
 "@octokit/auth-token@^3.0.0":
   version "3.0.2"
@@ -5574,7 +5574,7 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-react-app@^7.0.0:
+eslint-config-react-app@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-7.0.1.tgz#73ba3929978001c5c86274c017ea57eb5fa644b4"
   integrity sha512-K6rNzvkIeHaTd8m/QEh1Zko0KI7BACWkkneSs6s9cKZC/J27X3eZR6Upt1jkmZ/4FK+XUOPPxMEN7+lbUXfSlA==
@@ -8871,13 +8871,13 @@ nwsapi@^2.2.0:
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.2.tgz#e5418863e7905df67d51ec95938d67bf801f0bb0"
   integrity sha512-90yv+6538zuvUMnN+zCr8LuV6bPFdq50304114vJYJ8RDyK8D5O9Phpbd6SZWgI7PwzmmfN1upeOJlvybDSgCw==
 
-nx@15.0.6, "nx@>=14.8.6 < 16":
-  version "15.0.6"
-  resolved "https://registry.yarnpkg.com/nx/-/nx-15.0.6.tgz#fa8765081d5f7019155495b16d27017b3a543608"
-  integrity sha512-SIHydl0LMM0JvGPp2aPuGGPqx+78lc5AMkZc5mHJdsxRp8+L+YlTNqEI4EuevcdzGQTQrHoW+oksqAZPdyy/tA==
+nx@15.0.7, "nx@>=14.8.6 < 16":
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/nx/-/nx-15.0.7.tgz#232182952c17e80f701643e8e6b883df1546cc8b"
+  integrity sha512-noXi5Cjd/NSyKDJ+HrkiUFkSRORFFDVAeQYX8LwRrVPvgex/8pv1okzJRXd2diPq3/tft2Cm9EXHLAE2xRvtlQ==
   dependencies:
-    "@nrwl/cli" "15.0.6"
-    "@nrwl/tao" "15.0.6"
+    "@nrwl/cli" "15.0.7"
+    "@nrwl/tao" "15.0.7"
     "@parcel/watcher" "2.0.4"
     "@yarnpkg/lockfile" "^1.1.0"
     "@yarnpkg/parsers" "^3.0.0-rc.18"
@@ -10192,7 +10192,7 @@ react-app-polyfill@^3.0.0:
     regenerator-runtime "^0.13.9"
     whatwg-fetch "^3.6.2"
 
-react-dev-utils@^12.0.0:
+react-dev-utils@^12.0.1:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-12.0.1.tgz#ba92edb4a1f379bd46ccd6bcd4e7bc398df33e73"
   integrity sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==
@@ -10256,10 +10256,10 @@ react-refresh@^0.11.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
   integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
 
-react-scripts@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-5.0.0.tgz#6547a6d7f8b64364ef95273767466cc577cb4b60"
-  integrity sha512-3i0L2CyIlROz7mxETEdfif6Sfhh9Lfpzi10CtcGs1emDQStmZfWjJbAIMtRD0opVUjQuFWqHZyRZ9PPzKCFxWg==
+react-scripts@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-5.0.1.tgz#6285dbd65a8ba6e49ca8d651ce30645a6d980003"
+  integrity sha512-8VAmEm/ZAwQzJ+GOMLbBsTdDKOpuZh7RPs0UymvBR2vRk4iZWCskjbFnxqjrzoIvlNNRZ3QJFx6/qDSi6zSnaQ==
   dependencies:
     "@babel/core" "^7.16.0"
     "@pmmmwh/react-refresh-webpack-plugin" "^0.5.3"
@@ -10277,7 +10277,7 @@ react-scripts@5.0.0:
     dotenv "^10.0.0"
     dotenv-expand "^5.1.0"
     eslint "^8.3.0"
-    eslint-config-react-app "^7.0.0"
+    eslint-config-react-app "^7.0.1"
     eslint-webpack-plugin "^3.1.1"
     file-loader "^6.2.0"
     fs-extra "^10.0.0"
@@ -10294,7 +10294,7 @@ react-scripts@5.0.0:
     postcss-preset-env "^7.0.1"
     prompts "^2.4.2"
     react-app-polyfill "^3.0.0"
-    react-dev-utils "^12.0.0"
+    react-dev-utils "^12.0.1"
     react-refresh "^0.11.0"
     resolve "^1.20.0"
     resolve-url-loader "^4.0.0"
