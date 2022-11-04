@@ -1,24 +1,42 @@
-interface ClientToServerEvents {
-    hello: () => void;
-}
+import { Position } from "../position";
+import { GameData } from "../game";
 
-
-interface InterServerEvents {
-    ping: () => void;
-}
-
-interface SocketData {
-    name: string;
-    age: number;
-}
-
-enum MessageEventType {
-    COUNTDOWN = "countdown"
+enum ServerToClientEventType {
+  COUNTDOWN = "countdown",
+  CHARACTERS_DATA = "charactersData",
+  CLIENTS_CONNECTED = "clientsConnected",
 }
 
 interface ServerToClientEvents {
-    [MessageEventType.COUNTDOWN]: (countdown: number) => void
+  [ServerToClientEventType.COUNTDOWN]: (countdown: number) => void;
+  [ServerToClientEventType.CLIENTS_CONNECTED]: (clients: string[]) => void;
+  [ServerToClientEventType.CHARACTERS_DATA]: (gameData: GameData) => void;
 }
 
+enum ClientToServerEventType {
+  CLICK = "click",
+  KICK_ALL_PLAYERS = "kickAllPlayers",
+}
 
-export {ServerToClientEvents, ClientToServerEvents, InterServerEvents, SocketData, MessageEventType}
+interface ClientToServerEvents {
+  [ClientToServerEventType.CLICK]: (position: Position) => void;
+  [ClientToServerEventType.KICK_ALL_PLAYERS]: () => void;
+}
+
+interface InterServerEvents {
+  ping: () => void;
+}
+
+interface SocketData {
+  name: string;
+  age: number;
+}
+
+export {
+  ServerToClientEvents,
+  ClientToServerEvents,
+  ClientToServerEventType,
+  InterServerEvents,
+  SocketData,
+  ServerToClientEventType,
+};
