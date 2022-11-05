@@ -11,8 +11,9 @@
     "typescript": "^4.8.4"
   },
   "scripts": {
-    "types": "lerna run --scope @websocketgame/shared start && lerna run --ignore @websocketgame/shared start",
-    "start": "lerna run --ignore @websocketgame/shared start"
+    "types": "lerna run --scope @websocketgame/shared start",
+    "start": "lerna run --ignore @websocketgame/shared start",
+    "oldStart": "lerna run --scope @websocketgame/shared start && lerna run --ignore @websocketgame/shared start"
   },
   "private": true,
   "workspaces": [

@@ -1,4 +1,5 @@
 import { Position } from "../position";
+import { Weapon } from "../weapons";
 
 export interface Player {
   position: Position;
@@ -6,4 +7,7 @@ export interface Player {
   nick: string;
   destination?: Position;
   speed: number;
+  weapon: Weapon;
+  level: number;
+  exp: number;
 }
