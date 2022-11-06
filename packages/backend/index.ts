@@ -11,13 +11,15 @@ import {
 } from "@websocketgame/shared/dist/socket";
 import Players from "./classes/Players";
 import MessagesToFrontend from "./classes/MessagesToFrontend";
+import Projectiles from "./classes/Projectiles";
 
 dotenv.config();
 
 const port: number = process.env.PORT ? Number(process.env.port) : 80;
 
 const messages = new MessagesToFrontend();
-const players = new Players(messages.addMessage);
+const projectiles = new Projectiles();
+const players = new Players(messages.addMessage, projectiles);
 
 const io = new Server<
   ClientToServerEvents,
@@ -32,9 +34,15 @@ const io = new Server<
 
 const updateCoreGameData = (socket: Socket) => {
   players.movePlayers();
+  projectiles.moveProjectiles();
+  projectiles.checkCollisions();
   socket.broadcast.emit(ServerToClientEventType.CHARACTERS_DATA, {
     charactersData: { players: players.getPlayers() },
   });
+  socket.broadcast.emit(
+    ServerToClientEventType.PROJECTILES,
+    projectiles.getProjectiles()
+  );
 };
 
 io.on("connection", (socket) => {

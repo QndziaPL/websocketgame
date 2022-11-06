@@ -8,4 +8,6 @@ export interface Weapon {
   type: WeaponType;
   damage: number;
   attacksPerSecond: number;
+  speed: number;
+  range: number;
 }

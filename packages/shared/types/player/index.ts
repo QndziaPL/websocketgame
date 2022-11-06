@@ -11,6 +11,8 @@ export interface Player {
   level: number;
   exp: number;
   skillSet: PlayerSkill[];
+  isAttacking: boolean;
+  lastTimeAttacked: number;
 }
 
 export interface PlayerSkill {

@@ -1,19 +1,24 @@
 import { Player } from "@websocketgame/shared/dist/player";
 import { Position } from "@websocketgame/shared/dist/position";
 import { SimpleBow } from "@websocketgame/shared/dist/weapons/weapons";
-import {
-  movePlayerByVector,
-  numberToFixed,
-} from "../playerMovement/playerMovement";
 import { SkillButton } from "@websocketgame/shared/dist/input";
 import { sampleSkillSet } from "@websocketgame/shared/dist/skills";
+import { WeaponType } from "@websocketgame/shared/dist/weapons";
+import Projectiles from "./Projectiles";
+import { v4 } from "uuid";
+import {
+  moveObjectByVector,
+  objectMovement,
+} from "../objectMovement/objectMovement";
 
 export default class Players {
   private players: Player[] = [];
   private readonly addMessage: (content: string) => void;
+  private projectiles: Projectiles;
 
-  constructor(addMessage: (content: string) => void) {
+  constructor(addMessage: (content: string) => void, projectiles: Projectiles) {
     this.addMessage = addMessage;
+    this.projectiles = projectiles;
   }
 
   getPlayers() {
@@ -36,43 +41,47 @@ export default class Players {
       exp: 0,
       level: 1,
       skillSet: sampleSkillSet,
+      isAttacking: false,
+      lastTimeAttacked: 0,
     });
     const message = `Added ${id} to players`;
     this.addMessage(message);
     console.log(message);
   }
 
-  performBaseAttack = (id: string, vector: Position) => {};
+  performBaseAttack = (id: string, vector: Position) => {
+    const player = this.getPlayer(id);
+    if (player) {
+      const { weapon, position } = player;
+      if (player.weapon.type === WeaponType.RANGED) {
+        this.projectiles.addProjectile({
+          position: position,
+          speed: weapon.speed,
+          destination: moveObjectByVector(player.position, vector), // TODO: probably wrong!!!
+          id: v4(),
+          damage: weapon.damage,
+          range: weapon.range,
+          initialPosition: position,
+        });
+      }
+    }
+  };
 
   movePlayers() {
     for (let i = 0; i < this.players.length; i++) {
       const { destination, position, speed } = this.players[i];
       if (destination) {
-        if (destination.x !== position.x && destination.y !== position.y) {
-          const xDif = destination.x - position.x;
-          const yDif = destination.y - position.y;
-          const stepLength = numberToFixed(
-            Math.sqrt(xDif * xDif + yDif * yDif),
-            4
-          );
-          const xStepValue = numberToFixed((xDif / stepLength) * speed, 4);
-          const yStepValue = numberToFixed((yDif / stepLength) * speed, 4);
-          const nextX = numberToFixed(position.x + xStepValue, 4);
-          const nextY = numberToFixed(position.y + yStepValue, 4);
-          if (
-            Math.abs(destination.x - nextX) < 5 &&
-            Math.abs(destination.y - nextY) < 5
-          ) {
-            this.players[i].position = destination;
-            this.players[i].destination = undefined;
-          } else {
-            this.players[i].position = {
-              x: numberToFixed(position.x + xStepValue, 4),
-              y: numberToFixed(position.y + yStepValue, 4),
-            };
-          }
-        } else {
+        const { newPosition, isDestination } = objectMovement(
+          destination,
+          position,
+          speed
+        );
+
+        if (isDestination) {
+          this.players[i].position = destination;
           this.players[i].destination = undefined;
+        } else {
+          this.players[i].position = newPosition;
         }
       }
     }
@@ -96,7 +105,7 @@ export default class Players {
   updatePlayerDestination(id: string, vector: Position) {
     const player = this.getPlayer(id);
     if (!player) return;
-    const newDestination = movePlayerByVector(player.position, vector);
+    const newDestination = moveObjectByVector(player.position, vector);
     this.updatePlayerPositionField(id, newDestination, "destination");
   }
 
