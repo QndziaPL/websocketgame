@@ -1,6 +1,7 @@
 import { Position } from "@websocketgame/shared/dist/position";
 
-export const numberToFixed = (num: number) => Number(num.toFixed());
+export const numberToFixed = (num: number, fractionDigits?: number) =>
+  Number(num.toFixed(fractionDigits));
 export const movePlayerByVector = (
   oldPosition: Position,
   vector: Position

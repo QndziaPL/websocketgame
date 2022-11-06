@@ -46,11 +46,15 @@ export default class Players {
         if (destination.x !== position.x && destination.y !== position.y) {
           const xDif = destination.x - position.x;
           const yDif = destination.y - position.y;
-          const stepLength = Math.sqrt(xDif * xDif + yDif * yDif);
-          const xStepValue = (xDif / stepLength) * speed;
-          const yStepValue = (yDif / stepLength) * speed;
-          const nextX = numberToFixed(position.x + xStepValue);
-          const nextY = numberToFixed(position.y + yStepValue);
+          const stepLength = numberToFixed(
+            Math.sqrt(xDif * xDif + yDif * yDif),
+            4
+          );
+          const xStepValue = numberToFixed((xDif / stepLength) * speed, 4);
+          const yStepValue = numberToFixed((yDif / stepLength) * speed, 4);
+          const nextX = numberToFixed(position.x + xStepValue, 4);
+          const nextY = numberToFixed(position.y + yStepValue, 4);
+          console.log(xStepValue, yStepValue);
           if (
             Math.abs(destination.x - nextX) < 5 &&
             Math.abs(destination.y - nextY) < 5
@@ -59,8 +63,8 @@ export default class Players {
             this.players[i].destination = undefined;
           } else {
             this.players[i].position = {
-              x: numberToFixed(position.x + xStepValue),
-              y: numberToFixed(position.y + yStepValue),
+              x: numberToFixed(position.x + xStepValue, 4),
+              y: numberToFixed(position.y + yStepValue, 4),
             };
           }
         } else {
