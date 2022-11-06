@@ -1,5 +1,6 @@
 import { Position } from "../position";
 import { GameData, MessageToFrontend } from "../game";
+import { SkillButton } from "../input";
 
 enum ServerToClientEventType {
   COUNTDOWN = "countdown",
@@ -18,15 +19,19 @@ interface ServerToClientEvents {
 }
 
 enum ClientToServerEventType {
-  CLICK = "click",
+  RIGHT_CLICK = "rightClick",
+  LEFT_CLICK = "leftClick",
   KICK_ALL_PLAYERS = "kickAllPlayers",
   RE_JOIN_GAME = "reJoinGame",
+  SKILL_BUTTON_PRESSED = "skillButtonPressed",
 }
 
 interface ClientToServerEvents {
-  [ClientToServerEventType.CLICK]: (position: Position) => void;
+  [ClientToServerEventType.RIGHT_CLICK]: (position: Position) => void;
+  [ClientToServerEventType.LEFT_CLICK]: (position: Position) => void;
   [ClientToServerEventType.KICK_ALL_PLAYERS]: () => void;
   [ClientToServerEventType.RE_JOIN_GAME]: () => void;
+  [ClientToServerEventType.SKILL_BUTTON_PRESSED]: (button: SkillButton) => void;
 }
 
 interface InterServerEvents {

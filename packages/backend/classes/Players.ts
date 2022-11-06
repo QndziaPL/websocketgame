@@ -5,6 +5,8 @@ import {
   movePlayerByVector,
   numberToFixed,
 } from "../playerMovement/playerMovement";
+import { SkillButton } from "@websocketgame/shared/dist/input";
+import { sampleSkillSet } from "@websocketgame/shared/dist/skills";
 
 export default class Players {
   private players: Player[] = [];
@@ -33,11 +35,14 @@ export default class Players {
       weapon: SimpleBow,
       exp: 0,
       level: 1,
+      skillSet: sampleSkillSet,
     });
     const message = `Added ${id} to players`;
     this.addMessage(message);
     console.log(message);
   }
+
+  performBaseAttack = (id: string, vector: Position) => {};
 
   movePlayers() {
     for (let i = 0; i < this.players.length; i++) {
@@ -54,7 +59,6 @@ export default class Players {
           const yStepValue = numberToFixed((yDif / stepLength) * speed, 4);
           const nextX = numberToFixed(position.x + xStepValue, 4);
           const nextY = numberToFixed(position.y + yStepValue, 4);
-          console.log(xStepValue, yStepValue);
           if (
             Math.abs(destination.x - nextX) < 5 &&
             Math.abs(destination.y - nextY) < 5
@@ -96,9 +100,11 @@ export default class Players {
     this.updatePlayerPositionField(id, newDestination, "destination");
   }
 
-  removeAllPlayers() {
+  useSkill = (button: SkillButton) => {};
+
+  removeAllPlayers = () => {
     this.players = [];
-  }
+  };
 
   removePlayer(id: string, reason: string) {
     const newPlayers = [...this.players];

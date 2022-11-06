@@ -7,5 +7,5 @@ export interface Weapon {
   name: string;
   type: WeaponType;
   damage: number;
-  cooldown: number;
+  attacksPerSecond: number;
 }

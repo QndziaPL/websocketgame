@@ -45,8 +45,12 @@ io.on("connection", (socket) => {
     players.getPlayers().map(({ id }) => id)
   );
 
-  socket.on(ClientToServerEventType.CLICK, (vector) => {
+  socket.on(ClientToServerEventType.RIGHT_CLICK, (vector) => {
     players.updatePlayerDestination(socket.id, vector);
+  });
+
+  socket.on(ClientToServerEventType.LEFT_CLICK, (vector) => {
+    players.performBaseAttack(socket.id, vector);
   });
 
   socket.on(ClientToServerEventType.KICK_ALL_PLAYERS, () => {
