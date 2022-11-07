@@ -11,6 +11,7 @@ import {
   objectMovement,
 } from "../objectMovement/objectMovement";
 import { getExperienceForLevelUpSteps } from "@websocketgame/shared/dist/player/levels";
+import { checkObjectCollision } from "../objectMovement/objectCollision";
 
 export default class Players {
   private players: Player[] = [];
@@ -114,6 +115,34 @@ export default class Players {
     const newDestination = moveObjectByVector(player.position, vector);
     this.updatePlayerPositionField(id, newDestination, "destination");
   }
+
+  checkCollisions = () => {
+    const newPlayers: Player[] = [];
+    this.players.forEach((player) => {
+      const newPlayer = { ...player };
+      const projectileCollided = this.projectiles
+        .getProjectiles()
+        .find((projectile) =>
+          checkObjectCollision(
+            {
+              position: player.position,
+              collisionRadius: player.collisionRadius,
+            },
+            {
+              position: projectile.position,
+              collisionRadius: projectile.collisionRadius,
+            }
+          )
+        );
+      if (projectileCollided) {
+        newPlayer.hp = newPlayer.hp - projectileCollided.damage;
+        this.addMessage(`Player lost ${projectileCollided.damage} hp`);
+      }
+
+      newPlayers.push(newPlayer);
+    });
+    this.players = newPlayers;
+  };
 
   useSkill = (button: SkillButton) => {};
 

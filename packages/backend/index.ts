@@ -34,8 +34,8 @@ const io = new Server<
 
 const updateCoreGameData = (socket: Socket) => {
   players.movePlayers();
+  players.checkCollisions();
   projectiles.moveProjectiles();
-  projectiles.checkCollisions();
   socket.broadcast.emit(ServerToClientEventType.CHARACTERS_DATA, {
     charactersData: { players: players.getPlayers() },
   });

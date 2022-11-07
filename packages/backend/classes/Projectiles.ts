@@ -15,8 +15,6 @@ export default class Projectiles {
     this.projectiles.push(projectile);
   };
 
-  checkCollisions = () => {};
-
   moveProjectiles = () => {
     const newProjectiles: Projectile[] = [];
     this.projectiles.forEach((projectile) => {
