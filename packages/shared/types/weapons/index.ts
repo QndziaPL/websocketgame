@@ -10,4 +10,5 @@ export interface Weapon {
   attacksPerSecond: number;
   speed: number;
   range: number;
+  collisionRadius: number;
 }

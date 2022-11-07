@@ -7,5 +7,6 @@ export const SimpleBow: Weapon = {
   damage: 2,
   speed: 5,
   range: 1000,
+  collisionRadius: 5,
 };
 export const weapons: Weapon[] = [SimpleBow];

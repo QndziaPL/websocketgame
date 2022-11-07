@@ -10,9 +10,13 @@ export interface Player {
   weapon: Weapon;
   level: number;
   exp: number;
+  expForNextLevel: number;
   skillSet: PlayerSkill[];
   isAttacking: boolean;
   lastTimeAttacked: number;
+  collisionRadius: number;
+  hp: number;
+  maxHp: number;
 }
 
 export interface PlayerSkill {

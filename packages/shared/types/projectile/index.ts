@@ -8,4 +8,5 @@ export interface Projectile {
   position: Position;
   destination: Position;
   initialPosition: Position;
+  collisionRadius: number;
 }

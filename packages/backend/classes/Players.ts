@@ -10,6 +10,7 @@ import {
   moveObjectByVector,
   objectMovement,
 } from "../objectMovement/objectMovement";
+import { getExperienceForLevelUpSteps } from "@websocketgame/shared/dist/player/levels";
 
 export default class Players {
   private players: Player[] = [];
@@ -39,10 +40,14 @@ export default class Players {
       position: { x: 100, y: 100 },
       weapon: SimpleBow,
       exp: 0,
+      expForNextLevel: getExperienceForLevelUpSteps()[0],
       level: 1,
       skillSet: sampleSkillSet,
       isAttacking: false,
       lastTimeAttacked: 0,
+      collisionRadius: 15,
+      hp: 10,
+      maxHp: 10,
     });
     const message = `Added ${id} to players`;
     this.addMessage(message);
@@ -62,6 +67,7 @@ export default class Players {
           damage: weapon.damage,
           range: weapon.range,
           initialPosition: position,
+          collisionRadius: weapon.collisionRadius,
         });
       }
     }
