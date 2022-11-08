@@ -29,7 +29,7 @@ export default class Players {
 
   addNewPlayer(id: string, nick: string, speed: number) {
     if (this.players.find((player) => player.id === id)) {
-      const message = `Player with id '${id}' is already in game`;
+      const message = `Player ${nick} is already in game`;
       this.addMessage(message);
       console.log(message);
       return;
@@ -50,7 +50,7 @@ export default class Players {
       hp: 10,
       maxHp: 10,
     });
-    const message = `Added ${id} to players`;
+    const message = `Player ${nick} joined!`;
     this.addMessage(message);
     console.log(message);
   }
@@ -144,7 +144,7 @@ export default class Players {
       if (projectileCollided && projectileCollided.ownerId !== player.id) {
         this.projectiles.useDurability(projectileCollided.id);
         newPlayer.hp = newPlayer.hp - projectileCollided.damage;
-        this.addMessage(`Player lost ${projectileCollided.damage} hp`);
+        this.addMessage(`${player.nick} lost ${projectileCollided.damage}hp`);
       }
 
       newPlayers.push(newPlayer);

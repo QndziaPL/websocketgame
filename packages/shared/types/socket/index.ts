@@ -28,15 +28,15 @@ enum ClientToServerEventType {
   RIGHT_CLICK = "rightClick",
   LEFT_CLICK = "leftClick",
   KICK_ALL_PLAYERS = "kickAllPlayers",
-  RE_JOIN_GAME = "reJoinGame",
   SKILL_BUTTON_PRESSED = "skillButtonPressed",
+  JOIN_GAME = "joinGame",
 }
 
 interface ClientToServerEvents {
   [ClientToServerEventType.RIGHT_CLICK]: (position: Position) => void;
   [ClientToServerEventType.LEFT_CLICK]: (position: Position) => void;
   [ClientToServerEventType.KICK_ALL_PLAYERS]: () => void;
-  [ClientToServerEventType.RE_JOIN_GAME]: () => void;
+  [ClientToServerEventType.JOIN_GAME]: (nickname: string) => void;
   [ClientToServerEventType.SKILL_BUTTON_PRESSED]: (button: SkillButton) => void;
 }
 

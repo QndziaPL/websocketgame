@@ -67,8 +67,6 @@ const updateCoreGameData = (socket: Socket) => {
 };
 
 io.on("connection", (socket) => {
-  players.addNewPlayer(socket.id, "test player", 1);
-
   socket.emit(
     ServerToClientEventType.CLIENTS_CONNECTED,
     players.getPlayers().map(({ id }) => id)
@@ -90,8 +88,8 @@ io.on("connection", (socket) => {
     players.removePlayer(socket.id, reason);
   });
 
-  socket.on(ClientToServerEventType.RE_JOIN_GAME, () => {
-    players.addNewPlayer(socket.id, "test player", 1);
+  socket.on(ClientToServerEventType.JOIN_GAME, (nickname: string) => {
+    players.addNewPlayer(socket.id, nickname, 1);
   });
 
   setInterval(() => {
