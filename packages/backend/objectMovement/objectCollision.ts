@@ -14,5 +14,5 @@ export const checkObjectCollision = (
     p1.position.x - p2.position.x,
     p1.position.y - p2.position.y
   );
-  return length >= p1.collisionRadius + p2.collisionRadius;
+  return length <= p1.collisionRadius + p2.collisionRadius;
 };

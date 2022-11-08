@@ -4,7 +4,7 @@ export const SimpleBow: Weapon = {
   name: "Bow",
   type: WeaponType.RANGED,
   attacksPerSecond: 1,
-  damage: 2,
+  damage: 1,
   speed: 5,
   range: 1000,
   collisionRadius: 5,

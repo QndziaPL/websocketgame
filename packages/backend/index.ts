@@ -12,6 +12,7 @@ import {
 import Players from "./classes/Players";
 import MessagesToFrontend from "./classes/MessagesToFrontend";
 import Projectiles from "./classes/Projectiles";
+import { BasePlayer } from "@websocketgame/shared/dist/characters";
 
 dotenv.config();
 
@@ -37,7 +38,27 @@ const updateCoreGameData = (socket: Socket) => {
   players.checkCollisions();
   projectiles.moveProjectiles();
   socket.broadcast.emit(ServerToClientEventType.CHARACTERS_DATA, {
-    charactersData: { players: players.getPlayers() },
+    charactersBaseData: {
+      basePlayers: players.getPlayers().map(
+        ({
+          position,
+          id,
+          nick,
+          hp,
+          maxHp,
+          destination,
+          collisionRadius,
+        }): BasePlayer => ({
+          position,
+          id,
+          nick,
+          hp,
+          maxHp,
+          destination,
+          collisionRadius,
+        })
+      ),
+    },
   });
   socket.broadcast.emit(
     ServerToClientEventType.PROJECTILES,
@@ -53,12 +74,12 @@ io.on("connection", (socket) => {
     players.getPlayers().map(({ id }) => id)
   );
 
-  socket.on(ClientToServerEventType.RIGHT_CLICK, (vector) => {
-    players.updatePlayerDestination(socket.id, vector);
+  socket.on(ClientToServerEventType.RIGHT_CLICK, (mouseClickPosition) => {
+    players.updatePlayerDestination(socket.id, mouseClickPosition);
   });
 
-  socket.on(ClientToServerEventType.LEFT_CLICK, (vector) => {
-    players.performBaseAttack(socket.id, vector);
+  socket.on(ClientToServerEventType.LEFT_CLICK, (mouseClickPosition) => {
+    players.performBaseAttack(socket.id, mouseClickPosition);
   });
 
   socket.on(ClientToServerEventType.KICK_ALL_PLAYERS, () => {
@@ -75,7 +96,7 @@ io.on("connection", (socket) => {
 
   setInterval(() => {
     updateCoreGameData(socket);
-  }, 15);
+  }, 1000 / 60);
 
   setInterval(() => {
     socket.emit(
@@ -83,4 +104,19 @@ io.on("connection", (socket) => {
       messages.getMessages()
     );
   }, 100);
+
+  setInterval(() => {
+    const clientsPlayer = players.getPlayer(socket.id);
+    if (clientsPlayer) {
+      const { exp, expForNextLevel, hp, maxHp, weapon, level } = clientsPlayer;
+      socket.emit(ServerToClientEventType.MY_PLAYER, {
+        expForNextLevel,
+        exp,
+        hp,
+        maxHp,
+        weapon,
+        level,
+      });
+    }
+  }, 50);
 });

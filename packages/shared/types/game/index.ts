@@ -1,7 +1,7 @@
-import { CharactersData } from "../characters";
+import { CharactersBaseData } from "../characters";
 
 export interface GameData {
-  charactersData: CharactersData;
+  charactersBaseData: CharactersBaseData;
 }
 
 export enum MessageToFrontendType {

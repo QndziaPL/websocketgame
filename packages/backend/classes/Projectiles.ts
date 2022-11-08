@@ -15,9 +15,28 @@ export default class Projectiles {
     this.projectiles.push(projectile);
   };
 
+  removeProjectile = (id: string) => {
+    const newProjectiles = [...this.projectiles];
+    newProjectiles.splice(
+      this.projectiles.findIndex((projectile) => projectile.id === id),
+      1
+    );
+    this.projectiles = newProjectiles;
+  };
+
+  useDurability = (id: string) => {
+    const newProjectiles = [...this.projectiles];
+    const indexOfProjectile = newProjectiles.findIndex(
+      (proj) => proj.id === id
+    );
+    newProjectiles[indexOfProjectile].durability =
+      newProjectiles[indexOfProjectile].durability - 1;
+    this.projectiles = newProjectiles;
+  };
+
   moveProjectiles = () => {
     const newProjectiles: Projectile[] = [];
-    this.projectiles.forEach((projectile) => {
+    this.projectiles.filter(durabilityFilter).forEach((projectile) => {
       const { newPosition, remainingLength, isDestination } = objectMovement(
         projectile.destination,
         projectile.position,
@@ -37,3 +56,5 @@ export default class Projectiles {
     this.projectiles = newProjectiles;
   };
 }
+
+const durabilityFilter = (projectile: Projectile) => projectile.durability > 0;

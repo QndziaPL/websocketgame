@@ -3,9 +3,7 @@ export const getExperienceForLevelUpSteps = (): number[] => {
   const firstLevelExp = 50;
   const steps: number[] = [firstLevelExp];
   for (let i = 1; i <= maxLevel; i++) {
-    steps.push(steps[i - 1] * 5);
+    steps.push(Math.floor(steps[i - 1] * 1.3));
   }
-
-  console.log(steps);
   return steps;
-};
+}; //TODO: i need to find better way for it

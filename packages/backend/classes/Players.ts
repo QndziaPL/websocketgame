@@ -55,9 +55,13 @@ export default class Players {
     console.log(message);
   }
 
-  performBaseAttack = (id: string, vector: Position) => {
+  performBaseAttack = (id: string, mouseClickPosition: Position) => {
     const player = this.getPlayer(id);
     if (player) {
+      const vector = vectorFromMousePosition(
+        mouseClickPosition,
+        player.position
+      );
       const { weapon, position } = player;
       if (player.weapon.type === WeaponType.RANGED) {
         this.projectiles.addProjectile({
@@ -69,6 +73,8 @@ export default class Players {
           range: weapon.range,
           initialPosition: position,
           collisionRadius: weapon.collisionRadius,
+          ownerId: player.id,
+          durability: 1,
         });
       }
     }
@@ -109,9 +115,10 @@ export default class Players {
     return this.players.find((player) => player.id === id);
   }
 
-  updatePlayerDestination(id: string, vector: Position) {
+  updatePlayerDestination(id: string, mouseClickPosition: Position) {
     const player = this.getPlayer(id);
     if (!player) return;
+    const vector = vectorFromMousePosition(mouseClickPosition, player.position);
     const newDestination = moveObjectByVector(player.position, vector);
     this.updatePlayerPositionField(id, newDestination, "destination");
   }
@@ -134,7 +141,8 @@ export default class Players {
             }
           )
         );
-      if (projectileCollided) {
+      if (projectileCollided && projectileCollided.ownerId !== player.id) {
+        this.projectiles.useDurability(projectileCollided.id);
         newPlayer.hp = newPlayer.hp - projectileCollided.damage;
         this.addMessage(`Player lost ${projectileCollided.damage} hp`);
       }
@@ -162,3 +170,13 @@ export default class Players {
     }
   }
 }
+
+const vectorFromMousePosition = (
+  mousePosition: Position,
+  playerPosition: Position
+): Position => {
+  return {
+    x: mousePosition.x - playerPosition.x,
+    y: mousePosition.y - playerPosition.y,
+  };
+};

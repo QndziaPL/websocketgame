@@ -9,4 +9,6 @@ export interface Projectile {
   destination: Position;
   initialPosition: Position;
   collisionRadius: number;
+  ownerId: string;
+  durability: number;
 }

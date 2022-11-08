@@ -2,6 +2,7 @@ import { Position } from "../position";
 import { GameData, MessageToFrontend } from "../game";
 import { SkillButton } from "../input";
 import { Projectile } from "../projectile";
+import { MyPlayerForFrontend } from "../characters";
 
 enum ServerToClientEventType {
   COUNTDOWN = "countdown",
@@ -9,6 +10,7 @@ enum ServerToClientEventType {
   CLIENTS_CONNECTED = "clientsConnected",
   MESSAGES_TO_FRONTEND = "messagesToFrontend",
   PROJECTILES = "projectiles",
+  MY_PLAYER = "myPlayer",
 }
 
 interface ServerToClientEvents {
@@ -19,6 +21,7 @@ interface ServerToClientEvents {
     messages: MessageToFrontend[]
   ) => void;
   [ServerToClientEventType.PROJECTILES]: (projectiles: Projectile[]) => void;
+  [ServerToClientEventType.MY_PLAYER]: (myPlayer?: MyPlayerForFrontend) => void;
 }
 
 enum ClientToServerEventType {
