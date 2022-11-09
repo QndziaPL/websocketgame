@@ -49,6 +49,8 @@ export default class Players {
       collisionRadius: 15,
       hp: 10,
       maxHp: 10,
+      notifiedOfDeath: false,
+      lookingTowardsDegree: 0,
     });
     const message = `Player ${nick} joined!`;
     this.addMessage(message);
@@ -57,7 +59,7 @@ export default class Players {
 
   performBaseAttack = (id: string, mouseClickPosition: Position) => {
     const player = this.getPlayer(id);
-    if (player) {
+    if (player && player.hp > 0) {
       const vector = vectorFromMousePosition(
         mouseClickPosition,
         player.position
@@ -111,16 +113,34 @@ export default class Players {
     }
   }
 
+  private updatePlayerLookingTowardsDegree = (id: string, degree: number) => {
+    const index = this.players.findIndex((player) => player.id === id);
+    if (index !== -1) {
+      this.players[index].lookingTowardsDegree = degree;
+    }
+  };
+
   getPlayer(id: string): Player | undefined {
     return this.players.find((player) => player.id === id);
   }
 
   updatePlayerDestination(id: string, mouseClickPosition: Position) {
     const player = this.getPlayer(id);
-    if (!player) return;
-    const vector = vectorFromMousePosition(mouseClickPosition, player.position);
-    const newDestination = moveObjectByVector(player.position, vector);
-    this.updatePlayerPositionField(id, newDestination, "destination");
+    if (player && player.hp > 0) {
+      const vector = vectorFromMousePosition(
+        mouseClickPosition,
+        player.position
+      );
+      const newDestination = moveObjectByVector(player.position, vector);
+
+      const radians = Math.atan2(
+        mouseClickPosition.x - player.position.x,
+        mouseClickPosition.y - player.position.y
+      );
+      const degrees = radians * ((180 / Math.PI) * -1) + 180;
+      this.updatePlayerLookingTowardsDegree(id, degrees);
+      this.updatePlayerPositionField(id, newDestination, "destination");
+    }
   }
 
   checkCollisions = () => {
@@ -141,13 +161,22 @@ export default class Players {
             }
           )
         );
-      if (projectileCollided && projectileCollided.ownerId !== player.id) {
+      if (
+        player.hp > 0 &&
+        projectileCollided &&
+        projectileCollided.ownerId !== player.id
+      ) {
         this.projectiles.useDurability(projectileCollided.id);
         newPlayer.hp = newPlayer.hp - projectileCollided.damage;
         this.addMessage(`${player.nick} lost ${projectileCollided.damage}hp`);
       }
 
       newPlayers.push(newPlayer);
+
+      if (newPlayer.hp <= 0 && !newPlayer.notifiedOfDeath) {
+        this.addMessage(`Player ${newPlayer.nick} is a piece of shit`);
+        newPlayer.notifiedOfDeath = true;
+      }
     });
     this.players = newPlayers;
   };
@@ -170,6 +199,8 @@ export default class Players {
     }
   }
 }
+
+const isAliveFilter = (player: Player) => player.hp > 0;
 
 const vectorFromMousePosition = (
   mousePosition: Position,

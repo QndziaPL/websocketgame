@@ -48,6 +48,7 @@ const updateCoreGameData = (socket: Socket) => {
           maxHp,
           destination,
           collisionRadius,
+          lookingTowardsDegree,
         }): BasePlayer => ({
           position,
           id,
@@ -56,6 +57,7 @@ const updateCoreGameData = (socket: Socket) => {
           maxHp,
           destination,
           collisionRadius,
+          lookingTowardsDegree,
         })
       ),
     },
@@ -116,5 +118,5 @@ io.on("connection", (socket) => {
         level,
       });
     }
-  }, 50);
+  }, 1000 / 60);
 });

@@ -13,6 +13,7 @@ export type BasePlayer = Pick<
   | "maxHp"
   | "destination"
   | "collisionRadius"
+  | "lookingTowardsDegree"
 >;
 
 export type MyPlayerForFrontend = Pick<

@@ -17,6 +17,8 @@ export interface Player {
   collisionRadius: number;
   hp: number;
   maxHp: number;
+  notifiedOfDeath: boolean;
+  lookingTowardsDegree: number;
 }
 
 export interface PlayerSkill {
