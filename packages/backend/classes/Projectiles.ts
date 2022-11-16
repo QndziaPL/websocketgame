@@ -29,22 +29,28 @@ export default class Projectiles {
     const indexOfProjectile = newProjectiles.findIndex(
       (proj) => proj.id === id
     );
+
     newProjectiles[indexOfProjectile].durability =
       newProjectiles[indexOfProjectile].durability - 1;
+
     this.projectiles = newProjectiles;
   };
 
   moveProjectiles = () => {
     const newProjectiles: Projectile[] = [];
+
     this.projectiles.filter(durabilityFilter).forEach((projectile) => {
       const { newPosition, remainingLength, isDestination } = objectMovement(
         projectile.destination,
         projectile.position,
         projectile.speed
       );
+
       const xDif = newPosition.x - projectile.initialPosition.x;
       const yDif = newPosition.y - projectile.initialPosition.y;
+
       const distanceTravelled = lengthBetweenPoints(xDif, yDif);
+
       if (
         distanceTravelled < projectile.range &&
         projectile.position.x !== newPosition.x &&
@@ -53,6 +59,7 @@ export default class Projectiles {
         newProjectiles.push({ ...projectile, position: newPosition });
       }
     });
+
     this.projectiles = newProjectiles;
   };
 }

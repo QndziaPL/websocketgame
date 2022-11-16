@@ -1,7 +1,9 @@
 import { CharactersBaseData } from "../characters";
+import { EnemiesBaseData } from "../enemy";
 
 export interface GameData {
   charactersBaseData: CharactersBaseData;
+  enemiesBaseData: EnemiesBaseData;
 }
 
 export enum MessageToFrontendType {

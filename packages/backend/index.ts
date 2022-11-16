@@ -12,7 +12,12 @@ import {
 import Players from "./classes/Players";
 import MessagesToFrontend from "./classes/MessagesToFrontend";
 import Projectiles from "./classes/Projectiles";
-import { BasePlayer } from "@websocketgame/shared/dist/characters";
+import Enemies from "./classes/Enemies";
+import { Enemy, EnemyType } from "@websocketgame/shared/dist/enemy";
+import { v4 } from "uuid";
+import { emitCharacters } from "./emitters/characters";
+import { emitProjectiles } from "./emitters/projectiles";
+import { emitMyPlayer } from "./emitters/myPlayer";
 
 dotenv.config();
 
@@ -21,6 +26,7 @@ const port: number = process.env.PORT ? Number(process.env.port) : 80;
 const messages = new MessagesToFrontend();
 const projectiles = new Projectiles();
 const players = new Players(messages.addMessage, projectiles);
+const enemies = new Enemies();
 
 const io = new Server<
   ClientToServerEvents,
@@ -37,35 +43,8 @@ const updateCoreGameData = (socket: Socket) => {
   players.movePlayers();
   players.checkCollisions();
   projectiles.moveProjectiles();
-  socket.broadcast.emit(ServerToClientEventType.CHARACTERS_DATA, {
-    charactersBaseData: {
-      basePlayers: players.getPlayers().map(
-        ({
-          position,
-          id,
-          nick,
-          hp,
-          maxHp,
-          destination,
-          collisionRadius,
-          lookingTowardsDegree,
-        }): BasePlayer => ({
-          position,
-          id,
-          nick,
-          hp,
-          maxHp,
-          destination,
-          collisionRadius,
-          lookingTowardsDegree,
-        })
-      ),
-    },
-  });
-  socket.broadcast.emit(
-    ServerToClientEventType.PROJECTILES,
-    projectiles.getProjectiles()
-  );
+  emitCharacters({ socket, enemies, players });
+  emitProjectiles({ socket, projectiles });
 };
 
 io.on("connection", (socket) => {
@@ -108,15 +87,30 @@ io.on("connection", (socket) => {
   setInterval(() => {
     const clientsPlayer = players.getPlayer(socket.id);
     if (clientsPlayer) {
-      const { exp, expForNextLevel, hp, maxHp, weapon, level } = clientsPlayer;
-      socket.emit(ServerToClientEventType.MY_PLAYER, {
-        expForNextLevel,
-        exp,
-        hp,
-        maxHp,
-        weapon,
-        level,
-      });
+      emitMyPlayer({ socket, clientsPlayer });
     }
   }, 1000 / 60);
+
+  setInterval(() => {
+    enemies.addNewEnemies(addTestEnemy(), 1, {
+      topLeftPointOfArea: { x: 0, y: 0 },
+      rightBottomPointOfArea: { x: 1000, y: 1000 },
+    });
+  }, 5000);
+});
+
+const addTestEnemy = (): Enemy => ({
+  position: { x: 0, y: 0 },
+  hp: 20,
+  maxHp: 20,
+  id: v4(),
+  damage: 2,
+  collisionRadius: 30,
+  lookingTowardsDegree: 0,
+  speed: 2,
+  type: EnemyType.FROG,
+  isAttacking: false,
+  name: "test enemy",
+  lastTimeAttacked: 0,
+  attacks: [],
 });

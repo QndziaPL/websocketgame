@@ -25,7 +25,7 @@ export const objectMovement = (
 } => {
   const xDif = destination.x - position.x;
   const yDif = destination.y - position.y;
-  if (Math.abs(xDif) < 3 && Math.abs(yDif) < 3)
+  if (Math.abs(xDif) < speed && Math.abs(yDif) < speed)
     return {
       newPosition: destination,
       isDestination: true,
