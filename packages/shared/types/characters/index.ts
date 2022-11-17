@@ -18,5 +18,5 @@ export type BasePlayer = Pick<
 
 export type MyPlayerForFrontend = Pick<
   Player,
-  "hp" | "exp" | "expForNextLevel" | "maxHp" | "weapon" | "level"
+  "hp" | "exp" | "maxHp" | "weapon" | "level"
 >;

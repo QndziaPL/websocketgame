@@ -10,10 +10,10 @@ import {
   moveObjectByVector,
   objectMovement,
 } from "../objectMovement/objectMovement";
-import { getExperienceForLevelUpSteps } from "@websocketgame/shared/dist/player/levels";
 import { checkObjectCollision } from "../objectMovement/objectCollision";
 import { ProjectileSource } from "@websocketgame/shared/dist/projectile";
 import { playerLevelUp } from "./Players/helpers";
+import { getExperienceNeededForLevels } from "@websocketgame/shared/dist/player/levels";
 
 export default class Players {
   private players: Player[] = [];
@@ -46,8 +46,11 @@ export default class Players {
       speed,
       position: { x: 100, y: 100 },
       weapon: SimpleBow,
-      exp: 0,
-      expForNextLevel: getExperienceForLevelUpSteps(1),
+      exp: {
+        value: 0,
+        expForNextLevel: getExperienceNeededForLevels(1).next,
+        expForCurrentLevel: getExperienceNeededForLevels(1).current,
+      },
       level: 1,
       skillSet: sampleSkillSet,
       isAttacking: false,
@@ -96,8 +99,8 @@ export default class Players {
   };
 
   playerGetExperience = (player: Player, exp: number) => {
-    player.exp += exp;
-    if (player.exp >= player.expForNextLevel) {
+    player.exp.value += exp;
+    if (player.exp.value >= player.exp.expForNextLevel) {
       return playerLevelUp(player);
     }
     return player;

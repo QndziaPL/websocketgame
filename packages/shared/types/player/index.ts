@@ -9,8 +9,11 @@ export interface Player {
   speed: number;
   weapon: Weapon;
   level: number;
-  exp: number;
-  expForNextLevel: number;
+  exp: {
+    value: number;
+    expForNextLevel: number;
+    expForCurrentLevel: number;
+  };
   skillSet: PlayerSkill[];
   isAttacking: boolean;
   lastTimeAttacked: number;

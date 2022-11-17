@@ -13,9 +13,8 @@ export const emitMyPlayer: EmitMyPlayerFunctionType = ({
   clientsPlayer,
   socket,
 }) => {
-  const { exp, expForNextLevel, hp, maxHp, weapon, level } = clientsPlayer;
+  const { exp, hp, maxHp, weapon, level } = clientsPlayer;
   socket.emit(ServerToClientEventType.MY_PLAYER, {
-    expForNextLevel,
     exp,
     hp,
     maxHp,
