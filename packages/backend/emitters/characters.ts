@@ -1,8 +1,8 @@
-import { ServerToClientEventType } from "@websocketgame/shared/dist/socket";
-import { BasePlayer } from "@websocketgame/shared/dist/characters";
+import { ServerToClientEventType } from "@websocketgame/shared/dist/types/socket";
+import { BasePlayer } from "@websocketgame/shared/dist/types/characters";
 import { Socket } from "socket.io";
-import Players from "../classes/Players";
-import Enemies from "../classes/Enemies";
+import Players from "../classes/Players/Players";
+import Enemies from "../classes/Enemies/Enemies";
 
 interface EmitCharactersProps {
   socket: Socket;

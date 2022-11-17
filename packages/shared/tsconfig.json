@@ -11,6 +11,6 @@
   },
   "include": [
     "types/**/*",
-    "helpers/**/*"
+    "helpers/*"
   ]
 }

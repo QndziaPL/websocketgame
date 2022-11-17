@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
-import { Player } from "@websocketgame/shared/dist/player";
-import { ServerToClientEventType } from "@websocketgame/shared/dist/socket";
+import { Player } from "@websocketgame/shared/dist/types/player";
+import { ServerToClientEventType } from "@websocketgame/shared/dist/types/socket";
 
 interface EmitMyPlayerProps {
   socket: Socket;

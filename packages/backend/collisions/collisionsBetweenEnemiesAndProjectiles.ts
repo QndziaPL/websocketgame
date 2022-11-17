@@ -1,8 +1,8 @@
-import Enemies from "../classes/Enemies";
+import Enemies from "../classes/Enemies/Enemies";
 import Projectiles from "../classes/Projectiles";
-import { Enemy } from "@websocketgame/shared/dist/enemy";
+import { Enemy } from "@websocketgame/shared/dist/types/enemy";
 import { checkObjectCollision } from "../objectMovement/objectCollision";
-import { ProjectileSource } from "@websocketgame/shared/dist/projectile";
+import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
 
 interface CollisionsBetweenEnemiesAndProjectilesProps {
   enemies: Enemies;

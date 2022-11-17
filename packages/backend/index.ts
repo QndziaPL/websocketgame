@@ -8,19 +8,17 @@ import {
   ServerToClientEvents,
   ServerToClientEventType,
   SocketData,
-} from "@websocketgame/shared/dist/socket";
-import Players from "./classes/Players";
+} from "@websocketgame/shared/dist/types/socket";
+import Players from "./classes/Players/Players";
 import MessagesToFrontend from "./classes/MessagesToFrontend";
 import Projectiles from "./classes/Projectiles";
-import Enemies from "./classes/Enemies";
-import { Enemy, EnemyType } from "@websocketgame/shared/dist/enemy";
-import { v4 } from "uuid";
+import Enemies from "./classes/Enemies/Enemies";
 import { emitCharacters } from "./emitters/characters";
 import { emitProjectiles } from "./emitters/projectiles";
 import { emitMyPlayer } from "./emitters/myPlayer";
 import { checkCollisions } from "./collisions/checkCollisions";
-import { randomNumberBetween } from "@websocketgame/shared/dist/helpers/helpers";
 import { createServer } from "http";
+import { addTestEnemy } from "./classes/Enemies/helpers";
 
 dotenv.config();
 
@@ -57,6 +55,7 @@ const updateCoreGameData = (socket: Socket) => {
   });
   players.movePlayers();
   projectiles.moveProjectiles();
+  enemies.attack();
   emitCharacters({ socket, enemies, players });
   emitProjectiles({ socket, projectiles });
 };
@@ -112,24 +111,3 @@ io.on("connection", (socket) => {
     });
   }, 5000);
 });
-
-const addTestEnemy = (): Enemy => {
-  const hp = randomNumberBetween(3, 6);
-  const exp = randomNumberBetween(5, 10);
-  return {
-    position: { x: 0, y: 0 },
-    hp,
-    maxHp: hp,
-    id: v4(),
-    damage: 2,
-    collisionRadius: 15,
-    lookingTowardsDegree: 0,
-    speed: 2,
-    type: EnemyType.HUMAN,
-    isAttacking: false,
-    name: "test enemy",
-    lastTimeAttacked: 0,
-    attacks: [],
-    exp,
-  };
-};

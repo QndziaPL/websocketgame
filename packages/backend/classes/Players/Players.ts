@@ -1,16 +1,16 @@
-import { Player } from "@websocketgame/shared/dist/player";
-import { Position } from "@websocketgame/shared/dist/position";
-import { SkillButton } from "@websocketgame/shared/dist/input";
-import { WeaponType } from "@websocketgame/shared/dist/weapons";
-import Projectiles from "./Projectiles";
+import { Player } from "@websocketgame/shared/dist/types/player";
+import { Position } from "@websocketgame/shared/dist/types/position";
+import { SkillButton } from "@websocketgame/shared/dist/types/input";
+import { WeaponType } from "@websocketgame/shared/dist/types/weapons";
+import Projectiles from "../Projectiles";
 import { v4 } from "uuid";
 import {
   moveObjectByVector,
   objectMovement,
-} from "../objectMovement/objectMovement";
-import { checkObjectCollision } from "../objectMovement/objectCollision";
-import { ProjectileSource } from "@websocketgame/shared/dist/projectile";
-import { createNewPlayerObject, playerLevelUp } from "./Players/helpers";
+} from "../../objectMovement/objectMovement";
+import { checkObjectCollision } from "../../objectMovement/objectCollision";
+import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
+import { createNewPlayerObject, playerLevelUp } from "./helpers";
 
 export default class Players {
   private players: Player[] = [];
@@ -69,6 +69,7 @@ export default class Players {
       );
       const { weapon, position } = player;
       if (player.weapon.type === WeaponType.RANGED) {
+        // TODO: extend for melee attack
         this.projectiles.addProjectile({
           position: position,
           speed: weapon.speed,
@@ -221,8 +222,8 @@ export default class Players {
 const isAliveFilter = (player: Player) => player.hp > 0;
 
 const vectorFromMousePosition = (
-    mousePosition: Position,
-    playerPosition: Position
+  mousePosition: Position,
+  playerPosition: Position
 ): Position => {
   return {
     x: mousePosition.x - playerPosition.x,

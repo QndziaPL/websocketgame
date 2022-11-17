@@ -1,7 +1,7 @@
-import { Player } from "@websocketgame/shared/dist/player";
-import { getExperienceNeededForLevels } from "@websocketgame/shared/dist/player/levels";
-import { SimpleBow } from "@websocketgame/shared/dist/weapons/weapons";
-import { sampleSkillSet } from "@websocketgame/shared/dist/skills";
+import { Player } from "@websocketgame/shared/dist/types/player";
+import { getExperienceNeededForLevels } from "@websocketgame/shared/dist/types/player/levels";
+import { SimpleBow } from "@websocketgame/shared/dist/types/weapons/weapons";
+import { sampleSkillSet } from "@websocketgame/shared/dist/types/skills";
 
 export const playerLevelUp = (player: Player): Player => {
   player.level++;

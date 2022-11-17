@@ -15,6 +15,11 @@ export interface EnemyAttack {
   name: string;
   cooldown: number;
   type: EnemyAttackType;
+  speed: number;
+  range: number;
+  collisionRadius: number;
+  attacksPerSecond: number;
+  damage: number;
 }
 
 export interface Enemy {

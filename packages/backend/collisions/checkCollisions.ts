@@ -1,5 +1,5 @@
-import Players from "../classes/Players";
-import Enemies from "../classes/Enemies";
+import Players from "../classes/Players/Players";
+import Enemies from "../classes/Enemies/Enemies";
 import Projectiles from "../classes/Projectiles";
 import { collisionsBetweenPlayersAndProjectiles } from "./collisionsBetweenPlayersAndProjectiles";
 import { collisionsBetweenEnemiesAndProjectiles } from "./collisionsBetweenEnemiesAndProjectiles";

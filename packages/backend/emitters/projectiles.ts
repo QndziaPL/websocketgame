@@ -1,6 +1,6 @@
 import Projectiles from "../classes/Projectiles";
 import { Socket } from "socket.io";
-import { ServerToClientEventType } from "@websocketgame/shared/dist/socket";
+import { ServerToClientEventType } from "@websocketgame/shared/dist/types/socket";
 
 interface EmitProjectilesProps {
   projectiles: Projectiles;

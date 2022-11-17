@@ -1,7 +1,7 @@
 import {
   MessageToFrontend,
   MessageToFrontendType,
-} from "@websocketgame/shared/dist/game";
+} from "@websocketgame/shared/dist/types/game";
 import { v4 } from "uuid";
 
 const maxMessagesLength = 100;

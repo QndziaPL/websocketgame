@@ -1,5 +1,6 @@
-import { Enemy } from "@websocketgame/shared/dist/enemy";
-import { Position } from "@websocketgame/shared/dist/position";
+import { getRandomSpawnPointInArea } from "./helpers";
+import { Position } from "@websocketgame/shared/dist/types/position";
+import { Enemy } from "@websocketgame/shared/dist/types/enemy";
 
 export interface AreaRange {
   topLeftPointOfArea: Position;
@@ -24,19 +25,6 @@ export default class Enemies {
   setEnemies = (enemies: Enemy[]) => {
     this.enemies = enemies;
   };
-}
-const getRandomSpawnPointInArea = ({
-  topLeftPointOfArea,
-  rightBottomPointOfArea,
-}: AreaRange) => {
-  const x = Math.floor(
-    Math.random() * (rightBottomPointOfArea.x - topLeftPointOfArea.x) +
-      topLeftPointOfArea.x
-  );
-  const y = Math.floor(
-    Math.random() * (rightBottomPointOfArea.y - topLeftPointOfArea.y) +
-      topLeftPointOfArea.y
-  );
 
-  return { x, y };
-};
+  attack = () => {};
+}

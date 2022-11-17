@@ -1,8 +1,8 @@
-import Players from "../classes/Players";
+import Players from "../classes/Players/Players";
 import Projectiles from "../classes/Projectiles";
-import { Player } from "@websocketgame/shared/dist/player";
+import { Player } from "@websocketgame/shared/dist/types/player";
 import { checkObjectCollision } from "../objectMovement/objectCollision";
-import { ProjectileSource } from "@websocketgame/shared/dist/projectile";
+import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
 
 interface CollisionsBetweenPlayersAndProjectilesProps {
   players: Players;
