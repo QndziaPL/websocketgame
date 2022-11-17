@@ -20,6 +20,7 @@ import { emitProjectiles } from "./emitters/projectiles";
 import { emitMyPlayer } from "./emitters/myPlayer";
 import { checkCollisions } from "./collisions/checkCollisions";
 import { randomNumberBetween } from "@websocketgame/shared/dist/helpers/helpers";
+import { createServer } from "http";
 
 dotenv.config();
 
@@ -30,17 +31,22 @@ const projectiles = new Projectiles();
 const players = new Players(messages.addMessage, projectiles);
 const enemies = new Enemies();
 
+const httpServer = createServer();
 const io = new Server<
   ClientToServerEvents,
   ServerToClientEvents,
   InterServerEvents,
   SocketData
->(port ?? 4000, {
-  cors: {
-    // origin: "*",
-    origin: "http://localhost:3000",
-  },
-});
+>(
+  port ?? 4000,
+  // httpServer,
+  {
+    cors: {
+      origin: "*",
+      // origin: "http://localhost:3000",
+    },
+  }
+);
 
 const updateCoreGameData = (socket: Socket) => {
   checkCollisions({

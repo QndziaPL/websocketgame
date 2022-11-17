@@ -1,8 +1,6 @@
 import { Player } from "@websocketgame/shared/dist/player";
 import { Position } from "@websocketgame/shared/dist/position";
-import { SimpleBow } from "@websocketgame/shared/dist/weapons/weapons";
 import { SkillButton } from "@websocketgame/shared/dist/input";
-import { sampleSkillSet } from "@websocketgame/shared/dist/skills";
 import { WeaponType } from "@websocketgame/shared/dist/weapons";
 import Projectiles from "./Projectiles";
 import { v4 } from "uuid";
@@ -12,8 +10,7 @@ import {
 } from "../objectMovement/objectMovement";
 import { checkObjectCollision } from "../objectMovement/objectCollision";
 import { ProjectileSource } from "@websocketgame/shared/dist/projectile";
-import { playerLevelUp } from "./Players/helpers";
-import { getExperienceNeededForLevels } from "@websocketgame/shared/dist/player/levels";
+import { createNewPlayerObject, playerLevelUp } from "./Players/helpers";
 
 export default class Players {
   private players: Player[] = [];
@@ -25,6 +22,15 @@ export default class Players {
     this.projectiles = projectiles;
   }
 
+  updateWholePlayerObject = (player: Player) => {
+    const newPlayers = [...this.players];
+    const index = newPlayers.findIndex(
+      (existingPlayer) => existingPlayer.id === player.id
+    );
+    newPlayers[index] = player;
+    this.players = newPlayers;
+  };
+
   getPlayers() {
     return [...this.players];
   }
@@ -34,36 +40,24 @@ export default class Players {
   };
 
   addNewPlayer(id: string, nick: string, speed: number) {
-    if (this.players.find((player) => player.id === id)) {
-      const message = `Player ${nick} is already in game`;
+    const existingPlayer = this.players.find((player) => player.id === id);
+    if (existingPlayer) {
+      if (existingPlayer.hp <= 0) {
+        this.updateWholePlayerObject(
+          createNewPlayerObject({ id, nick, speed })
+        );
+      } else {
+        const message = `Player ${nick} is already in game`;
+        this.addMessage(message);
+        console.log(message);
+        return;
+      }
+    } else {
+      this.players.push(createNewPlayerObject({ id, nick, speed }));
+      const message = `Player ${nick} joined!`;
       this.addMessage(message);
       console.log(message);
-      return;
     }
-    this.players.push({
-      id,
-      nick,
-      speed,
-      position: { x: 100, y: 100 },
-      weapon: SimpleBow,
-      exp: {
-        value: 0,
-        expForNextLevel: getExperienceNeededForLevels(1).next,
-        expForCurrentLevel: getExperienceNeededForLevels(1).current,
-      },
-      level: 1,
-      skillSet: sampleSkillSet,
-      isAttacking: false,
-      lastTimeAttacked: 0,
-      collisionRadius: 15,
-      hp: 10,
-      maxHp: 10,
-      notifiedOfDeath: false,
-      lookingTowardsDegree: 0,
-    });
-    const message = `Player ${nick} joined!`;
-    this.addMessage(message);
-    console.log(message);
   }
 
   performBaseAttack = (id: string, mouseClickPosition: Position) => {
@@ -227,8 +221,8 @@ export default class Players {
 const isAliveFilter = (player: Player) => player.hp > 0;
 
 const vectorFromMousePosition = (
-  mousePosition: Position,
-  playerPosition: Position
+    mousePosition: Position,
+    playerPosition: Position
 ): Position => {
   return {
     x: mousePosition.x - playerPosition.x,

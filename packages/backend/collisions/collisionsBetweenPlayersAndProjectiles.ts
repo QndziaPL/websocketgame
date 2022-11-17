@@ -21,7 +21,11 @@ export const collisionsBetweenPlayersAndProjectiles: CollisionsBetweenPlayersAnd
       const newPlayer = { ...player };
       const projectileCollided = projectiles
         .getProjectiles()
-        .filter(({ source }) => source === ProjectileSource.ENEMY)
+        .filter(
+          ({ source }) =>
+            source === ProjectileSource.ENEMY ||
+            source === ProjectileSource.PLAYER
+        )
         .find((projectile) =>
           checkObjectCollision(
             {
