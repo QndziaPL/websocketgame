@@ -1,4 +1,4 @@
-import { Projectile } from "@websocketgame/shared/dist/projectile";
+import { Projectile } from "@websocketgame/shared/dist/types/projectile";
 import {
   lengthBetweenPoints,
   objectMovement,

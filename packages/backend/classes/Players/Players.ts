@@ -69,6 +69,9 @@ export default class Players {
       );
       const { weapon, position } = player;
       if (player.weapon.type === WeaponType.RANGED) {
+        this.addMessage(
+          `player ${player.nick} shoot bullet with speed ${weapon.speed}`
+        );
         // TODO: extend for melee attack
         this.projectiles.addProjectile({
           position: position,

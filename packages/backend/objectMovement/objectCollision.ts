@@ -1,4 +1,4 @@
-import { Position } from "@websocketgame/shared/dist/position";
+import { Position } from "@websocketgame/shared/dist/types/position";
 import { lengthBetweenPoints } from "./objectMovement";
 
 export interface PositionWithCollisionRadius {
