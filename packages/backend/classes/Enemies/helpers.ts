@@ -39,6 +39,7 @@ export const addTestEnemy = (): Enemy => {
     lastTimeAttacked: 0,
     attacks,
     exp,
+    visionRadius: 300,
   };
 };
 

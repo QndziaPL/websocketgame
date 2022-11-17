@@ -37,18 +37,18 @@ export interface Enemy {
   attacks: EnemyAttack[];
   speed: number;
   exp: number;
+  visionRadius: number;
 }
 
 export interface EnemiesBaseData {
   baseEnemies: BaseEnemy[];
 }
 
-export type BaseEnemy = Pick<
-  Enemy,
-  | "position"
-  | "name"
-  | "hp"
-  | "maxHp"
-  | "collisionRadius"
-  | "lookingTowardsDegree"
->;
+export type BaseEnemy = Pick<Enemy,
+    | "position"
+    | "name"
+    | "hp"
+    | "maxHp"
+    | "collisionRadius"
+    | "lookingTowardsDegree"
+    | "visionRadius">;

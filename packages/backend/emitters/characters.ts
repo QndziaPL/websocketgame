@@ -44,13 +44,16 @@ export const emitCharacters: EmitCharactersFunctionType = ({
     enemiesBaseData: {
       baseEnemies: enemies
         .getEnemies()
-        .map(({ position, name, hp, maxHp, collisionRadius }) => ({
-          position,
-          name,
-          hp,
-          maxHp,
-          collisionRadius,
-        })),
+        .map(
+          ({ position, name, hp, maxHp, collisionRadius, visionRadius }) => ({
+            position,
+            name,
+            hp,
+            maxHp,
+            collisionRadius,
+            visionRadius,
+          })
+        ),
     },
   });
 };
