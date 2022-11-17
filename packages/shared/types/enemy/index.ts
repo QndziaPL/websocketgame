@@ -31,6 +31,7 @@ export interface Enemy {
   isAttacking: boolean;
   attacks: EnemyAttack[];
   speed: number;
+  exp: number;
 }
 
 export interface EnemiesBaseData {

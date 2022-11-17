@@ -1,9 +1,15 @@
-export const getExperienceForLevelUpSteps = (): number[] => {
+export const getExperienceForLevelUpSteps = (currentLevel: number): number => {
   const maxLevel = 100;
   const firstLevelExp = 50;
+
   const steps: number[] = [firstLevelExp];
   for (let i = 1; i <= maxLevel; i++) {
-    steps.push(Math.floor(steps[i - 1] * 1.3));
+    const prevLevelExp = steps[i - 1];
+    const scaleFactor = (maxLevel - i - 1) / maxLevel;
+    console.log(scaleFactor);
+    steps.push(Math.floor(prevLevelExp + prevLevelExp * scaleFactor));
   }
-  return steps;
+
+  console.log(steps, "STEPS");
+  return steps[currentLevel - 1];
 }; //TODO: i need to find better way for it

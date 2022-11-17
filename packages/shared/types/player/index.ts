@@ -19,6 +19,7 @@ export interface Player {
   maxHp: number;
   notifiedOfDeath: boolean;
   lookingTowardsDegree: number;
+  // stats: BaseStats TODO: add stats like str, agi, endurance, armor blablabla
 }
 
 export interface PlayerSkill {

@@ -18,6 +18,7 @@ import { v4 } from "uuid";
 import { emitCharacters } from "./emitters/characters";
 import { emitProjectiles } from "./emitters/projectiles";
 import { emitMyPlayer } from "./emitters/myPlayer";
+import { checkCollisions } from "./collisions/checkCollisions";
 
 dotenv.config();
 
@@ -40,8 +41,13 @@ const io = new Server<
 });
 
 const updateCoreGameData = (socket: Socket) => {
+  checkCollisions({
+    players,
+    enemies,
+    projectiles,
+    addMessage: messages.addMessage,
+  });
   players.movePlayers();
-  players.checkCollisions();
   projectiles.moveProjectiles();
   emitCharacters({ socket, enemies, players });
   emitProjectiles({ socket, projectiles });
@@ -101,11 +107,11 @@ io.on("connection", (socket) => {
 
 const addTestEnemy = (): Enemy => ({
   position: { x: 0, y: 0 },
-  hp: 20,
-  maxHp: 20,
+  hp: 5,
+  maxHp: 5,
   id: v4(),
   damage: 2,
-  collisionRadius: 30,
+  collisionRadius: 10,
   lookingTowardsDegree: 0,
   speed: 2,
   type: EnemyType.FROG,
@@ -113,4 +119,5 @@ const addTestEnemy = (): Enemy => ({
   name: "test enemy",
   lastTimeAttacked: 0,
   attacks: [],
+  exp: 5,
 });

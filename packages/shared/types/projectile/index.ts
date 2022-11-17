@@ -11,4 +11,11 @@ export interface Projectile {
   collisionRadius: number;
   ownerId: string;
   durability: number;
+  source: ProjectileSource;
+}
+
+export enum ProjectileSource {
+  PLAYER = "player",
+  ENEMY = "enemy",
+  NPC = "npc",
 }

@@ -20,6 +20,10 @@ export default class Enemies {
   };
 
   getEnemies = () => this.enemies;
+
+  setEnemies = (enemies: Enemy[]) => {
+    this.enemies = enemies;
+  };
 }
 const getRandomSpawnPointInArea = ({
   topLeftPointOfArea,

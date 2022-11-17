@@ -12,6 +12,8 @@ import {
 } from "../objectMovement/objectMovement";
 import { getExperienceForLevelUpSteps } from "@websocketgame/shared/dist/player/levels";
 import { checkObjectCollision } from "../objectMovement/objectCollision";
+import { ProjectileSource } from "@websocketgame/shared/dist/projectile";
+import { playerLevelUp } from "./Players/helpers";
 
 export default class Players {
   private players: Player[] = [];
@@ -27,6 +29,10 @@ export default class Players {
     return [...this.players];
   }
 
+  setPlayers = (players: Player[]) => {
+    this.players = players;
+  };
+
   addNewPlayer(id: string, nick: string, speed: number) {
     if (this.players.find((player) => player.id === id)) {
       const message = `Player ${nick} is already in game`;
@@ -41,7 +47,7 @@ export default class Players {
       position: { x: 100, y: 100 },
       weapon: SimpleBow,
       exp: 0,
-      expForNextLevel: getExperienceForLevelUpSteps()[0],
+      expForNextLevel: getExperienceForLevelUpSteps(1),
       level: 1,
       skillSet: sampleSkillSet,
       isAttacking: false,
@@ -77,9 +83,24 @@ export default class Players {
           collisionRadius: weapon.collisionRadius,
           ownerId: player.id,
           durability: 1,
+          source: ProjectileSource.PLAYER,
         });
       }
     }
+  };
+
+  playersGetExperience = (exp: number) => {
+    this.players = this.players.map((player) =>
+      this.playerGetExperience(player, exp)
+    );
+  };
+
+  playerGetExperience = (player: Player, exp: number) => {
+    player.exp += exp;
+    if (player.exp >= player.expForNextLevel) {
+      return playerLevelUp(player);
+    }
+    return player;
   };
 
   movePlayers() {
