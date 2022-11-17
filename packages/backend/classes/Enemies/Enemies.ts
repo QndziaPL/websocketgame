@@ -14,7 +14,7 @@ export default class Enemies {
     if (this.enemies.length > 10) return;
     const newEnemies: Enemy[] = [];
     for (let i = 0; i < numberOfEnemies; i++) {
-      const newEnemy = { ...enemy, position: getRandomSpawnPointInArea(area) };
+      const newEnemy = {...enemy, position: getRandomSpawnPointInArea(area)};
       newEnemies.push(newEnemy);
     }
     this.enemies.push(...newEnemies);
@@ -26,5 +26,17 @@ export default class Enemies {
     this.enemies = enemies;
   };
 
-  attack = () => {};
+  performAction = () => {
+    //TODO: start here, implement checking if any player is withing range, if yes than check if you have some option
+    //todo: to attack from range (probably check enemy attacks and try to pick best one off cooldown)
+    //todo: if not possible move towards the closest enemy
+  }
+  
+  private move = () => {
+
+  }
+
+  private attack = () => {
+
+  };
 }

@@ -21,6 +21,7 @@ export interface CreateNewPlayerObjectProps {
   id: string;
   nick: string;
   speed: number;
+  //TODO: later some classes and other stuff
 }
 
 type CreateNewPlayerObjectFunctionType = (

@@ -18,7 +18,7 @@ export const addTestEnemy = (): Enemy => {
       cooldown: 2,
       type: EnemyAttackType.RANGE,
       speed: 0.2,
-      range: 400,
+      range: 300,
       collisionRadius: 5,
       attacksPerSecond: 0.3,
       damage: 3,
@@ -39,7 +39,7 @@ export const addTestEnemy = (): Enemy => {
     lastTimeAttacked: 0,
     attacks,
     exp,
-    visionRadius: 300,
+    visionRadius: 400,
   };
 };
 
