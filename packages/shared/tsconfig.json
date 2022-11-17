@@ -9,5 +9,8 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["types/**/*"]
+  "include": [
+    "types/**/*",
+    "helpers/**/*"
+  ]
 }

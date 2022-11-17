@@ -40,5 +40,10 @@ export interface EnemiesBaseData {
 
 export type BaseEnemy = Pick<
   Enemy,
-  "position" | "name" | "hp" | "maxHp" | "collisionRadius"
+  | "position"
+  | "name"
+  | "hp"
+  | "maxHp"
+  | "collisionRadius"
+  | "lookingTowardsDegree"
 >;

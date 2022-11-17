@@ -19,6 +19,7 @@ import { emitCharacters } from "./emitters/characters";
 import { emitProjectiles } from "./emitters/projectiles";
 import { emitMyPlayer } from "./emitters/myPlayer";
 import { checkCollisions } from "./collisions/checkCollisions";
+import { randomNumberBetween } from "@websocketgame/shared/dist/helpers/helpers";
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ const io = new Server<
   SocketData
 >(port ?? 4000, {
   cors: {
+    // origin: "*",
     origin: "http://localhost:3000",
   },
 });
@@ -105,19 +107,23 @@ io.on("connection", (socket) => {
   }, 5000);
 });
 
-const addTestEnemy = (): Enemy => ({
-  position: { x: 0, y: 0 },
-  hp: 5,
-  maxHp: 5,
-  id: v4(),
-  damage: 2,
-  collisionRadius: 10,
-  lookingTowardsDegree: 0,
-  speed: 2,
-  type: EnemyType.FROG,
-  isAttacking: false,
-  name: "test enemy",
-  lastTimeAttacked: 0,
-  attacks: [],
-  exp: 5,
-});
+const addTestEnemy = (): Enemy => {
+  const hp = randomNumberBetween(3, 6);
+  const exp = randomNumberBetween(5, 10);
+  return {
+    position: { x: 0, y: 0 },
+    hp,
+    maxHp: hp,
+    id: v4(),
+    damage: 2,
+    collisionRadius: 15,
+    lookingTowardsDegree: 0,
+    speed: 2,
+    type: EnemyType.HUMAN,
+    isAttacking: false,
+    name: "test enemy",
+    lastTimeAttacked: 0,
+    attacks: [],
+    exp,
+  };
+};
