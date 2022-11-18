@@ -13,6 +13,7 @@
   "scripts": {
     "types": "lerna run --scope @websocketgame/shared start",
     "start": "lerna run --ignore @websocketgame/shared start",
+    "startwifi": "lerna run --ignore @websocketgame/shared startwifi",
     "oldStart": "lerna run --scope @websocketgame/shared start && lerna run --ignore @websocketgame/shared start"
   },
   "private": true,

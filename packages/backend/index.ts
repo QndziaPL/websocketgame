@@ -17,34 +17,28 @@ import { emitCharacters } from "./emitters/characters";
 import { emitProjectiles } from "./emitters/projectiles";
 import { emitMyPlayer } from "./emitters/myPlayer";
 import { checkCollisions } from "./collisions/checkCollisions";
-import { createServer } from "http";
 import { addTestEnemy } from "./classes/Enemies/helpers";
 
 dotenv.config();
 
-const port: number = process.env.PORT ? Number(process.env.port) : 80;
+// const port: number = process.env.PORT ? Number(process.env.port) : 80;
 
 const messages = new MessagesToFrontend();
 const projectiles = new Projectiles();
 const players = new Players(messages.addMessage, projectiles);
 const enemies = new Enemies();
 
-const httpServer = createServer();
 const io = new Server<
   ClientToServerEvents,
   ServerToClientEvents,
   InterServerEvents,
   SocketData
->(
-  port ?? 4000,
-  // httpServer,
-  {
-    cors: {
-      origin: "*",
-      // origin: "http://localhost:3000",
-    },
-  }
-);
+>(80, {
+  cors: {
+    origin: "*",
+    // origin: "http://localhost:3000",
+  },
+});
 
 const updateCoreGameData = (socket: Socket) => {
   checkCollisions({
