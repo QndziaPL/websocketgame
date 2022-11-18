@@ -1,4 +1,4 @@
-import { Position } from "../../../types/types";
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 export const calculateProjectileDirectionMoveFactor: (
   mousePosition: Position,

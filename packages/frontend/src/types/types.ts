@@ -1,10 +1,6 @@
 import { GameMap } from "../map/types";
 import { AssetImageLoaded, AssetImageName } from "../assets/useGameAssets";
-
-export interface Position {
-  x: number;
-  y: number;
-}
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 export interface Size {
   width: number;

@@ -1,0 +1,23 @@
+.bottomCenterOverlay {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: gray;
+    flex-direction: column;
+    height: 60px;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    padding: 4px 8px;
+}
+
+
+.barWithLabel {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.bottomCenterHUDLabel {
+    width: 30px;
+}

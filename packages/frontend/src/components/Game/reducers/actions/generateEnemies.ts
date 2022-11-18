@@ -1,5 +1,5 @@
 import { ActionForReducer } from "../gameStateReducer";
-import { randomNumberBetween } from "../../../../helpers/helpers";
+import { randomNumberBetween } from "../../../../../../shared/helpers/helpers";
 import { Enemy } from "../../../../types/types";
 import { generateRandomEnemyPosition } from "../../../../generators/generateRandomEnemyPosition";
 

@@ -1,0 +1,28 @@
+.barContainer {
+    position: relative;
+    width: 100%;
+    margin: 2px 10px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.barContainerIndicator {
+    height: 100%;
+    transition-duration: 0.5s;
+}
+
+.additionalContent {
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+/* background gradient setups */
+
+.redHealthBar {
+    background: linear-gradient(0deg, rgba(5, 3, 67, 1) 0%, rgba(175, 18, 21, 1) 10%, rgba(255, 25, 0, 1) 50%, rgba(184, 18, 10, 1) 90%, rgba(2, 0, 36, 1) 100%);
+}
+
+.experienceBar {
+    background: linear-gradient(0deg, rgba(5, 3, 67, 1) 0%, rgba(0, 210, 186, 1) 10%, rgba(0, 255, 226, 1) 50%, rgba(0, 210, 186, 1) 90%, rgba(2, 0, 36, 1) 100%);
+}

@@ -1,5 +1,6 @@
-import { Position, Size } from "../types/types";
-import { randomNumberBetween } from "../helpers/helpers";
+import { Size } from "../types/types";
+import { randomNumberBetween } from "../../../shared/helpers/helpers";
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 const GENERATION_SIDES = ["top", "right", "bottom", "left"];
 export const generateRandomEnemyPosition: (windowSize: Size) => Position = (

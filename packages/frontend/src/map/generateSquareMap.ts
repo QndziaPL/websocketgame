@@ -1,6 +1,6 @@
-import { Position } from "../types/types";
 import { MapSquare } from "./types";
 import { generateMapObjects } from "./generateMapObjects";
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 export const generateSquareMap: (squarePosition: Position) => MapSquare = (
   squarePosition

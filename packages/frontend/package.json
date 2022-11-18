@@ -1,8 +1,7 @@
 {
-  "name": "rpg-with-mouse",
+  "name": "@websocketgame/frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://qndziapl.github.io/rpg-with-mouse",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
@@ -11,11 +10,12 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "classnames": "^2.3.2",
+    "dotenv": "^16.0.3",
     "gh-pages": "^3.2.3",
-    "prettier": "^2.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
+    "react-scripts": "5.0.1",
     "socket.io-client": "^4.5.3",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.0"
@@ -26,7 +26,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "getaddress": "@powershell $dupa=(Get-NetIPAddress -InterfaceAlias Wi-Fi -AddressFamily IPv4).IPAddress && $dupa",
+    "setaddress": "setaddress.ps1",
+    "startwifi": "setaddress.ps1 && cross-env REACT_APP_ADDRESS=$Env:REACT_APP_ADDRESS yarn start"
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +52,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "typescript": "^4.8.4"
   }
 }

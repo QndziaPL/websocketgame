@@ -1,7 +1,7 @@
-import { Position } from "../types/types";
 import { MapObject, Obstacle } from "./types";
-import { randomNumberBetween } from "../helpers/helpers";
+import { randomNumberBetween } from "../../../shared/helpers/helpers";
 import { MAP_SIDE, OBSTACLES } from "../consts/map";
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 export const generateMapObjects: (squarePosition: Position) => MapObject[] = (
   squarePosition: Position

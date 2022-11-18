@@ -1,55 +1,26 @@
-import React, {useEffect, useState} from "react";
+import { FC, useState } from "react";
+import { InitializedGame } from "./InitializedGame";
+import { JoinGameScreen } from "./components/JoinGameScreen/JoinGameScreen";
 import "./App.css";
-import Game from "./components/Game/Game";
-import {Manager} from "socket.io-client";
-import {ClientToServerEvents, ServerToClientEvents} from "./types/socket/socket";
-import {MessageEventType} from "./types/socket/messageEventType"
 
-
-const manager = new Manager<ServerToClientEvents, ClientToServerEvents>("http://localhost:80")
-const socket = manager.socket("/")
-
-const App = () => {
-
-    const [isConnected, setIsConnected] = useState(socket.connected);
-    const [lastPong, setLastPong] = useState<string>();
-
-    useEffect(() => {
-        socket.on('connect', () => {
-            console.log("połączony")
-            setIsConnected(true);
-        });
-
-        socket.on('disconnect', () => {
-            setIsConnected(false);
-        });
-
-        socket.on('pong', () => {
-            setLastPong(new Date().toISOString());
-        });
-
-        socket.on(MessageEventType.COUNTDOWN, (countdown) => {
-            console.log("GÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓWNO")
-            console.log(countdown)
-        })
-
-        return () => {
-            console.log("wchodzi disc")
-            socket.off('connect');
-            socket.off('disconnect');
-            socket.off('pong');
-        };
-    }, []);
-
-    const sendPing = () => {
-        socket.emit('ping');
-    }
-
+export const App: FC = () => {
+  const [configReady, setConfigReady] = useState(false);
+  const [nickname, setNickname] = useState("");
   return (
-    <div className="App" onClick={sendPing}>
-      <Game />
+    <div className="mainContainer">
+      {configReady ? (
+        <InitializedGame
+          nickname={nickname}
+          goToConfig={() => setConfigReady(false)}
+        />
+      ) : (
+        <JoinGameScreen
+          nickname={nickname}
+          setNickname={setNickname}
+          configReady={configReady}
+          setConfigReady={setConfigReady}
+        />
+      )}
     </div>
   );
 };
-
-export default App;

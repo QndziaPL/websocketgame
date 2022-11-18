@@ -1,4 +1,5 @@
-import { Position, Size } from "../../../types/types";
+import { Size } from "../../../types/types";
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 export const isProjectileInGameArea: (
   position: Position,

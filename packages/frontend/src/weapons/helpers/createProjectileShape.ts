@@ -1,9 +1,6 @@
-import {
-  FunctionWithSavedRotationOfProjectile,
-  Position,
-  Size,
-} from "../../types/types";
+import { FunctionWithSavedRotationOfProjectile, Size } from "../../types/types";
 import { AssetImageLoaded, AssetImageName } from "../../assets/useGameAssets";
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 export const createProjectileShape: FunctionWithSavedRotationOfProjectile = (
   projectilePosition, // when shoot these values are just center of player

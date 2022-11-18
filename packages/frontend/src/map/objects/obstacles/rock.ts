@@ -1,10 +1,11 @@
 import { CreateObstacleFunction, MapObjectType } from "../../types";
-import { Position, Size } from "../../../types/types";
-import { randomNumberBetween } from "../../../helpers/helpers";
+import { Size } from "../../../types/types";
+import { randomNumberBetween } from "../../../../../shared/helpers/helpers";
 import {
   AssetImageLoaded,
   AssetImageName,
 } from "../../../assets/useGameAssets";
+import { Position } from "@websocketgame/shared/dist/types/position";
 
 const renderRock = (
   ctx: CanvasRenderingContext2D,

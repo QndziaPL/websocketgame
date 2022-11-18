@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, VFC } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, VFC } from "react";
 import "./GameCanvas.css";
 
 interface Props {
@@ -11,10 +11,7 @@ interface Props {
   setSize: React.Dispatch<
     React.SetStateAction<{ width: number; height: number }>
   >;
-  update: () => void;
 }
-
-const FRAMERATE = 60;
 
 const GameCanvas: VFC<Props> = ({
   canvasContext,
@@ -22,11 +19,8 @@ const GameCanvas: VFC<Props> = ({
   draw,
   size,
   setSize,
-  update,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameId = useRef(0);
-  const lastFrameTimestamp = useRef(0);
 
   useEffect(() => {
     const updateSize = () => {
@@ -42,29 +36,21 @@ const GameCanvas: VFC<Props> = ({
     }
   }, [canvasRef, setCanvasContext]);
 
-  useEffect(() => {
-    const render = (timestamp = 0) => {
-      if (timestamp > lastFrameTimestamp.current - 1000 / FRAMERATE) {
-        draw(canvasContext!);
-        animationFrameId.current = requestAnimationFrame(render);
-        lastFrameTimestamp.current = timestamp;
-        update();
-      }
-    };
-    if (canvasContext) {
-      animationFrameId.current = requestAnimationFrame(render);
-    }
-    return () => cancelAnimationFrame(animationFrameId.current);
-  }, [draw, canvasContext]);
+  if (canvasContext) {
+    draw(canvasContext);
+  }
 
-  return (
-    <canvas
-      id="gameCanvas"
-      width={size.width}
-      height={size.height}
-      data-testid="gameCanvas"
-      ref={canvasRef}
-    />
+  return useMemo(
+    () => (
+      <canvas
+        id="gameCanvas"
+        width={size.width}
+        height={size.height}
+        data-testid="gameCanvas"
+        ref={canvasRef}
+      />
+    ),
+    [canvasContext, setCanvasContext, size, setSize]
   );
 };
 

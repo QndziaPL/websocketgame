@@ -1,0 +1,25 @@
+.joinGameScreen {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    align-items: center;
+    justify-content: center;
+}
+
+.configContainer {
+    background-color: aliceblue;
+    padding: 10px 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.configRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.configJoinButton {
+    margin: 10px auto;
+}
