@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 export default {
   title: "JoinGamePanel",
   component: JoinGamePanel,
+  argTypes: {},
 } as ComponentMeta<typeof JoinGamePanel>;
 
 export const Primary = () => {
