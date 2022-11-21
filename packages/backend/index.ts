@@ -41,6 +41,7 @@ const io = new Server<
 });
 
 const updateCoreGameData = (socket: Socket) => {
+  if (!players.getPlayers().length) return;
   checkCollisions({
     players,
     enemies,

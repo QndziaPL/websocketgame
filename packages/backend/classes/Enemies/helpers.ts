@@ -7,6 +7,9 @@ import {
   EnemyAttackType,
   EnemyType,
 } from "@websocketgame/shared/dist/types/enemy";
+import { Player } from "@websocketgame/shared/dist/types/player";
+import { Position } from "@websocketgame/shared/dist/types/position";
+import { lengthBetweenPoints } from "../../objectMovement/objectMovement";
 
 export const addTestEnemy = (): Enemy => {
   const hp = randomNumberBetween(3, 6);
@@ -57,4 +60,26 @@ export const getRandomSpawnPointInArea = ({
   );
 
   return { x, y };
+};
+
+export const sortByClosestPlayer = (
+  p1: Player,
+  p2: Player,
+  enemyPosition: Position
+) => {
+  const dist1 = lengthBetweenPoints(
+    p1.position.x - enemyPosition.x,
+    p1.position.y - enemyPosition.y
+  );
+  const dist2 = lengthBetweenPoints(
+    p2.position.x - enemyPosition.x,
+    p2.position.y - enemyPosition.y
+  );
+  if (dist1 > dist2) {
+    return 1;
+  }
+  if (dist2 > dist1) {
+    return -1;
+  }
+  return 0;
 };
