@@ -15,11 +15,6 @@
     flex-direction: column;
 }
 
-.configRow {
-    display: flex;
-    justify-content: space-between;
-}
-
 .configJoinButton {
     margin: 10px auto;
 }

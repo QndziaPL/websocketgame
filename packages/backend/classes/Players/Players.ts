@@ -8,7 +8,6 @@ import {
   moveObjectByVector,
   objectMovement,
 } from "../../objectMovement/objectMovement";
-import { checkObjectCollision } from "../../objectMovement/objectCollision";
 import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
 import { createNewPlayerObject, playerLevelUp } from "./helpers";
 
@@ -76,7 +75,7 @@ export default class Players {
         this.projectiles.addProjectile({
           position: position,
           speed: weapon.speed,
-          destination: moveObjectByVector(player.position, vector), // TODO: probably wrong!!!
+          destination: moveObjectByVector(player.position, vector),
           id: v4(),
           damage: weapon.damage,
           range: weapon.range,
@@ -164,44 +163,6 @@ export default class Players {
       this.updatePlayerPositionField(id, newDestination, "destination");
     }
   }
-
-  checkCollisions = () => {
-    const newPlayers: Player[] = [];
-    this.players.forEach((player) => {
-      const newPlayer = { ...player };
-      const projectileCollided = this.projectiles
-        .getProjectiles()
-        .find((projectile) =>
-          checkObjectCollision(
-            {
-              position: player.position,
-              collisionRadius: player.collisionRadius,
-            },
-            {
-              position: projectile.position,
-              collisionRadius: projectile.collisionRadius,
-            }
-          )
-        );
-      if (
-        player.hp > 0 &&
-        projectileCollided &&
-        projectileCollided.ownerId !== player.id
-      ) {
-        this.projectiles.useDurability(projectileCollided.id);
-        newPlayer.hp = newPlayer.hp - projectileCollided.damage;
-        this.addMessage(`${player.nick} lost ${projectileCollided.damage}hp`);
-      }
-
-      newPlayers.push(newPlayer);
-
-      if (newPlayer.hp <= 0 && !newPlayer.notifiedOfDeath) {
-        this.addMessage(`Player ${newPlayer.nick} is a piece of shit`);
-        newPlayer.notifiedOfDeath = true;
-      }
-    });
-    this.players = newPlayers;
-  };
 
   useSkill = (button: SkillButton) => {};
 

@@ -1,0 +1,7 @@
+.joinGamePanel {
+    background-color: aliceblue;
+    padding: 10px 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}

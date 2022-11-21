@@ -1,7 +1,7 @@
 import Players from "../classes/Players/Players";
 import Projectiles from "../classes/Projectiles";
 import { Player } from "@websocketgame/shared/dist/types/player";
-import { checkObjectCollision } from "../objectMovement/objectCollision";
+import { checkCircularAreaCollision } from "../objectMovement/objectCollision";
 import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
 
 interface CollisionsBetweenPlayersAndProjectilesProps {
@@ -27,7 +27,7 @@ export const collisionsBetweenPlayersAndProjectiles: CollisionsBetweenPlayersAnd
             source === ProjectileSource.PLAYER
         )
         .find((projectile) =>
-          checkObjectCollision(
+          checkCircularAreaCollision(
             {
               position: player.position,
               collisionRadius: player.collisionRadius,

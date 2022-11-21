@@ -1,6 +1,8 @@
 import { getRandomSpawnPointInArea } from "./helpers";
 import { Position } from "@websocketgame/shared/dist/types/position";
 import { Enemy } from "@websocketgame/shared/dist/types/enemy";
+import { Player } from "@websocketgame/shared/dist/types/player";
+import { checkCircularAreaCollision } from "../../objectMovement/objectCollision";
 
 export interface AreaRange {
   topLeftPointOfArea: Position;
@@ -26,17 +28,34 @@ export default class Enemies {
     this.enemies = enemies;
   };
 
-  performAction = () => {
+  performAction = (players: Player[]) => {
+    const newEnemies = [...this.enemies]
+    this.enemies.forEach((enemy) => {
+      const newEnemy = {...enemy}
+      players.forEach((player) => {
+        const inSight = checkCircularAreaCollision(
+            {
+              position: player.position,
+              collisionRadius: 1,
+            },
+            {position: enemy.position, collisionRadius: enemy.visionRadius}
+        );
+
+        if (inSight) {
+
+        }
+
+      });
+      newEnemy.destination
+    });
     //TODO: start here, implement checking if any player is withing range, if yes than check if you have some option
     //todo: to attack from range (probably check enemy attacks and try to pick best one off cooldown)
     //todo: if not possible move towards the closest enemy
-  }
-  
-  private move = () => {
+  };
 
-  }
+  private move = () => {
+  };
 
   private attack = () => {
-
   };
 }

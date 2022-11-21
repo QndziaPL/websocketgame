@@ -29,7 +29,9 @@
     "deploy": "gh-pages -d build",
     "getaddress": "@powershell $dupa=(Get-NetIPAddress -InterfaceAlias Wi-Fi -AddressFamily IPv4).IPAddress && $dupa",
     "setaddress": "setaddress.ps1",
-    "startwifi": "setaddress.ps1 && cross-env REACT_APP_ADDRESS=$Env:REACT_APP_ADDRESS yarn start"
+    "startwifi": "setaddress.ps1 && cross-env REACT_APP_ADDRESS=$Env:REACT_APP_ADDRESS yarn start",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
@@ -39,7 +41,17 @@
     "rules": {
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "off"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
@@ -54,7 +66,20 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-interactions": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/manager-webpack5": "^6.5.13",
+    "@storybook/node-logger": "^6.5.13",
+    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/react": "^6.5.13",
+    "@storybook/testing-library": "^0.0.13",
+    "babel-plugin-named-exports-order": "^0.0.2",
     "cross-env": "^7.0.3",
-    "typescript": "^4.8.4"
+    "prop-types": "^15.8.1",
+    "typescript": "^4.8.4",
+    "webpack": "^5.75.0"
   }
 }

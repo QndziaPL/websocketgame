@@ -24,6 +24,7 @@ export interface EnemyAttack {
 
 export interface Enemy {
   position: Position;
+  destination?: Position;
   lookingTowardsDegree: number;
   id: string;
   name: string;
@@ -44,11 +45,13 @@ export interface EnemiesBaseData {
   baseEnemies: BaseEnemy[];
 }
 
-export type BaseEnemy = Pick<Enemy,
-    | "position"
-    | "name"
-    | "hp"
-    | "maxHp"
-    | "collisionRadius"
-    | "lookingTowardsDegree"
-    | "visionRadius">;
+export type BaseEnemy = Pick<
+  Enemy,
+  | "position"
+  | "name"
+  | "hp"
+  | "maxHp"
+  | "collisionRadius"
+  | "lookingTowardsDegree"
+  | "visionRadius"
+>;

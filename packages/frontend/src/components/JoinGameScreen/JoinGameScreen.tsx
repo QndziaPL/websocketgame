@@ -1,5 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
 import "./JoinGameScreen.css";
+import { JoinGamePanel } from "../../stories/HUD/JoinGamePanel/JoinGamePanel";
 
 export interface JoinGameScreenProps {
   nickname: string;
@@ -28,30 +29,12 @@ export const JoinGameScreen: FC<JoinGameScreenProps> = ({
 
   return (
     <div className="joinGameScreen">
-      <form action="">
-        <div className="configContainer">
-          <h1>WPIERDOL, THE GAME</h1>
-          <div className="configRow">
-            <label htmlFor="nickname">nickname</label>
-            <input
-              ref={nicknameRef}
-              type="text"
-              name="nickname"
-              id="nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-            />
-          </div>
-          <button
-            type="submit"
-            className="configJoinButton"
-            disabled={nickname.length < 3}
-            onClick={handleJoin}
-          >
-            join
-          </button>
-        </div>
-      </form>
+      <JoinGamePanel
+        ref={nicknameRef}
+        nickname={nickname}
+        setNickname={setNickname}
+        handleJoin={handleJoin}
+      />
     </div>
   );
 };

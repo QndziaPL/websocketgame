@@ -6,7 +6,7 @@ export interface PositionWithCollisionRadius {
   collisionRadius: number;
 }
 
-export const checkObjectCollision = (
+export const checkCircularAreaCollision = (
   p1: PositionWithCollisionRadius,
   p2: PositionWithCollisionRadius
 ): boolean => {

@@ -49,7 +49,7 @@ const updateCoreGameData = (socket: Socket) => {
   });
   players.movePlayers();
   projectiles.moveProjectiles();
-  enemies.performAction();
+  enemies.performAction(players.getPlayers());
   emitCharacters({ socket, enemies, players });
   emitProjectiles({ socket, projectiles });
 };
