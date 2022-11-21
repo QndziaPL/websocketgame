@@ -73,9 +73,9 @@ export default class Players {
         );
         // TODO: extend for melee attack
         this.projectiles.addProjectile({
-          position: position,
+          position,
           speed: weapon.speed,
-          destination: moveObjectByVector(player.position, vector),
+          destination: moveObjectByVector(position, vector),
           id: v4(),
           damage: weapon.damage,
           range: weapon.range,

@@ -14,6 +14,7 @@ export interface EnemyAttack {
   id: string;
   name: string;
   cooldown: number;
+  lastTimeAttacked: number;
   type: EnemyAttackType;
   speed: number;
   range: number;
@@ -33,7 +34,6 @@ export interface Enemy {
   hp: number;
   maxHp: number;
   collisionRadius: number;
-  lastTimeAttacked: number;
   isAttacking: boolean;
   attacks: EnemyAttack[];
   speed: number;

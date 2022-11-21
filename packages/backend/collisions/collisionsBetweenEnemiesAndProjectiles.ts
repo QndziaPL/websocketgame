@@ -23,9 +23,9 @@ export const collisionsBetweenEnemiesAndProjectiles: CollisionBetweenEnemiesAndP
       const projectileCollided = projectiles
         .getProjectiles()
         .filter(
-          ({ source }) =>
+          ({ source, ownerId }) =>
             source === ProjectileSource.PLAYER ||
-            source === ProjectileSource.ENEMY
+            (source === ProjectileSource.ENEMY && enemy.id !== ownerId)
         )
         .find((projectile) =>
           checkCircularAreaCollision(

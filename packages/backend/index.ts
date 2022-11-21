@@ -49,7 +49,8 @@ const updateCoreGameData = (socket: Socket) => {
   });
   players.movePlayers();
   projectiles.moveProjectiles();
-  enemies.performAction(players.getPlayers());
+  enemies.performAction(players.getPlayers(), projectiles);
+  enemies.moveEnemies();
   emitCharacters({ socket, enemies, players });
   emitProjectiles({ socket, projectiles });
 };
@@ -99,9 +100,9 @@ io.on("connection", (socket) => {
   }, 1000 / 60);
 
   setInterval(() => {
-    enemies.addNewEnemies(addTestEnemy(), 1, {
+    enemies.addNewEnemies(addTestEnemy(), 2, {
       topLeftPointOfArea: { x: 0, y: 0 },
-      rightBottomPointOfArea: { x: 1000, y: 1000 },
+      rightBottomPointOfArea: { x: 2000, y: 1000 },
     });
-  }, 5000);
+  }, 2000);
 });
