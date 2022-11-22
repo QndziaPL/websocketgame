@@ -4,12 +4,10 @@ import { SkillButton } from "@websocketgame/shared/dist/types/input";
 import { WeaponType } from "@websocketgame/shared/dist/types/weapons";
 import Projectiles from "../Projectiles";
 import { v4 } from "uuid";
-import {
-  moveObjectByVector,
-  objectMovement,
-} from "../../objectMovement/objectMovement";
+import { moveObjectByVector } from "../../objectMovement/objectMovement";
 import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
 import { createNewPlayerObject, playerLevelUp } from "./helpers";
+import { moveCharacters } from "../../characterMovement/characterMovement";
 
 export default class Players {
   private players: Player[] = [];
@@ -104,23 +102,7 @@ export default class Players {
   };
 
   movePlayers() {
-    for (let i = 0; i < this.players.length; i++) {
-      const { destination, position, speed } = this.players[i];
-      if (destination) {
-        const { newPosition, isDestination } = objectMovement(
-          destination,
-          position,
-          speed
-        );
-
-        if (isDestination) {
-          this.players[i].position = destination;
-          this.players[i].destination = undefined;
-        } else {
-          this.players[i].position = newPosition;
-        }
-      }
-    }
+    moveCharacters(this.players);
   }
 
   private updatePlayerPositionField(

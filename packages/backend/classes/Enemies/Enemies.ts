@@ -3,13 +3,11 @@ import { Position } from "@websocketgame/shared/dist/types/position";
 import { Enemy, EnemyAttackType } from "@websocketgame/shared/dist/types/enemy";
 import { Player } from "@websocketgame/shared/dist/types/player";
 import { checkCircularAreaCollision } from "../../objectMovement/objectCollision";
-import {
-  lengthBetweenPoints,
-  objectMovement,
-} from "../../objectMovement/objectMovement";
+import { lengthBetweenPoints } from "../../objectMovement/objectMovement";
 import Projectiles from "../Projectiles";
 import { v4 } from "uuid";
 import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
+import { moveCharacters } from "../../characterMovement/characterMovement";
 
 export interface AreaRange {
   topLeftPointOfArea: Position;
@@ -23,7 +21,7 @@ export default class Enemies {
     if (this.enemies.length > 20) return;
     const newEnemies: Enemy[] = [];
     for (let i = 0; i < numberOfEnemies; i++) {
-      const newEnemy = {...enemy, position: getRandomSpawnPointInArea(area)};
+      const newEnemy = { ...enemy, position: getRandomSpawnPointInArea(area) };
       newEnemies.push(newEnemy);
     }
     this.enemies.push(...newEnemies);
@@ -38,43 +36,43 @@ export default class Enemies {
   performAction = (players: Player[], projectiles: Projectiles) => {
     const newEnemies: Enemy[] = [];
     this.enemies.forEach((enemy) => {
-      const newEnemy = {...enemy};
+      const newEnemy = { ...enemy };
       const playersSortedByDistanceFromEnemy = players.sort((p1, p2) =>
-          sortByClosestPlayer(p1, p2, enemy.position)
+        sortByClosestPlayer(p1, p2, enemy.position)
       );
 
-      const player = playersSortedByDistanceFromEnemy[0]
+      const player = playersSortedByDistanceFromEnemy[0];
 
       const inSight = checkCircularAreaCollision(
-          {
-            position: player.position,
-            collisionRadius: 1,
-          },
-          {position: enemy.position, collisionRadius: enemy.visionRadius}
+        {
+          position: player.position,
+          collisionRadius: 1,
+        },
+        { position: enemy.position, collisionRadius: enemy.visionRadius }
       );
 
       if (inSight) {
         const attacksInRange = enemy.attacks.filter(
-            ({range}) =>
-                range >=
-                lengthBetweenPoints(
-                    enemy.position.x - player.position.x,
-                    enemy.position.y - player.position.y
-                )
+          ({ range }) =>
+            range >=
+            lengthBetweenPoints(
+              enemy.position.x - player.position.x,
+              enemy.position.y - player.position.y
+            )
         );
 
         const attacksOffCooldown = attacksInRange.filter(
-            ({lastTimeAttacked, cooldown}) =>
-                Date.now() - lastTimeAttacked > cooldown * 1000
+          ({ lastTimeAttacked, cooldown }) =>
+            Date.now() - lastTimeAttacked > cooldown * 1000
         );
 
         if (
-            attacksOffCooldown.length &&
-            attacksOffCooldown[0].type === EnemyAttackType.RANGE
+          attacksOffCooldown.length &&
+          attacksOffCooldown[0].type === EnemyAttackType.RANGE
         ) {
           //TODO: temporarily i will trigger only first range attack
-          const {speed, collisionRadius, range, id, damage} =
-              attacksOffCooldown[0];
+          const { speed, collisionRadius, range, id, damage } =
+            attacksOffCooldown[0];
           projectiles.addProjectile({
             position: enemy.position,
             speed,
@@ -89,70 +87,13 @@ export default class Enemies {
             source: ProjectileSource.ENEMY,
           });
           newEnemy.attacks[
-              newEnemy.attacks.findIndex((attack) => attack.id === id)
-              ].lastTimeAttacked = Date.now();
+            newEnemy.attacks.findIndex((attack) => attack.id === id)
+          ].lastTimeAttacked = Date.now();
         } else {
           //TODO: later add logic for choosing attacks available etc
           newEnemy.destination = player.position;
         }
       }
-
-
-      // for (let i = 0; i < players.length; i++) {
-      //   const player = players[i];
-      //   const inSight = checkCircularAreaCollision(
-      //     {
-      //       position: player.position,
-      //       collisionRadius: 1,
-      //     },
-      //     { position: enemy.position, collisionRadius: enemy.visionRadius }
-      //   );
-      //
-      //   if (inSight) {
-      //     const attacksInRange = enemy.attacks.filter(
-      //       ({ range }) =>
-      //         range >=
-      //         lengthBetweenPoints(
-      //           enemy.position.x - player.position.x,
-      //           enemy.position.y - player.position.y
-      //         )
-      //     );
-      //
-      //     const attacksOffCooldown = attacksInRange.filter(
-      //       ({ lastTimeAttacked, cooldown }) =>
-      //         Date.now() - lastTimeAttacked > cooldown * 1000
-      //     );
-      //
-      //     if (
-      //       attacksOffCooldown.length &&
-      //       attacksOffCooldown[0].type === EnemyAttackType.RANGE
-      //     ) {
-      //       //TODO: temporarily i will trigger only first range attack
-      //       const { speed, collisionRadius, range, id, damage } =
-      //         attacksOffCooldown[0];
-      //       projectiles.addProjectile({
-      //         position: enemy.position,
-      //         speed,
-      //         destination: player.position,
-      //         id: v4(),
-      //         damage,
-      //         range,
-      //         initialPosition: enemy.position,
-      //         collisionRadius,
-      //         ownerId: enemy.id,
-      //         durability: 1,
-      //         source: ProjectileSource.ENEMY,
-      //       });
-      //       newEnemy.attacks[
-      //         newEnemy.attacks.findIndex((attack) => attack.id === id)
-      //       ].lastTimeAttacked = Date.now();
-      //     } else {
-      //       //TODO: later add logic for choosing attacks available etc
-      //       newEnemy.destination = player.position;
-      //     }
-      //     break;
-      //   }
-      // }
       newEnemies.push(newEnemy);
     });
 
@@ -160,25 +101,8 @@ export default class Enemies {
   };
 
   moveEnemies = () => {
-    for (let i = 0; i < this.enemies.length; i++) {
-      const {destination, position, speed} = this.enemies[i];
-      if (destination) {
-        const {newPosition, isDestination} = objectMovement(
-            destination,
-            position,
-            speed
-        );
-
-        if (isDestination) {
-          this.enemies[i].position = destination;
-          this.enemies[i].destination = undefined;
-        } else {
-          this.enemies[i].position = newPosition;
-        }
-      }
-    }
+    moveCharacters(this.enemies);
   };
 
-  private attack = () => {
-  };
+  private attack = () => {};
 }
