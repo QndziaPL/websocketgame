@@ -1,6 +1,6 @@
 import { Position } from "../position";
 
-export interface MeleeAttackInstance {
+export interface MeleeAttack {
   id: string;
   damage: number;
   range: number;
@@ -8,6 +8,9 @@ export interface MeleeAttackInstance {
   position: Position;
   ownerId: string;
   source: MeleeAttackSource;
+  whenPerformed: number;
+  animationTime: number;
+  dealtDamage: boolean;
 }
 
 export enum MeleeAttackSource {

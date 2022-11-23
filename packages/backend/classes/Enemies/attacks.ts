@@ -22,9 +22,9 @@ const BasicMeleeAttack: EnemyMeleeAttack = {
   type: EnemyAttackType.MEELE,
   speed: 2,
   range: 30,
-  collisionRadius: 30,
   attacksPerSecond: 0.3,
   damage: 5,
+  animationTime: 1000,
 };
 
 export { BasicBowAttack, BasicMeleeAttack };

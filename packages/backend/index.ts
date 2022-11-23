@@ -18,6 +18,7 @@ import { emitProjectiles } from "./emitters/projectiles";
 import { emitMyPlayer } from "./emitters/myPlayer";
 import { checkCollisions } from "./collisions/checkCollisions";
 import { addTestEnemy } from "./classes/Enemies/helpers";
+import MeleeAttacks from "./classes/MeleeAttacks";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ dotenv.config();
 
 const messages = new MessagesToFrontend();
 const projectiles = new Projectiles();
+const meleeAttacks = new MeleeAttacks();
 const players = new Players(messages.addMessage, projectiles);
 const enemies = new Enemies();
 
@@ -46,11 +48,13 @@ const updateCoreGameData = (socket: Socket) => {
     players,
     enemies,
     projectiles,
+    meleeAttacks,
     addMessage: messages.addMessage,
   });
   players.movePlayers();
   projectiles.moveProjectiles();
-  enemies.performAction(players.getPlayers(), projectiles);
+  meleeAttacks.updateMeleeAttacks();
+  enemies.performAction(players.getPlayers(), projectiles, meleeAttacks);
   enemies.moveEnemies();
   emitCharacters({ socket, enemies, players });
   emitProjectiles({ socket, projectiles });
@@ -99,6 +103,10 @@ io.on("connection", (socket) => {
       emitMyPlayer({ socket, clientsPlayer });
     }
   }, 1000 / 60);
+
+  setInterval(() => {
+    console.log(meleeAttacks.getMeleeAttacks());
+  }, 200);
 
   setInterval(() => {
     enemies.addNewEnemies(addTestEnemy(), 2, {

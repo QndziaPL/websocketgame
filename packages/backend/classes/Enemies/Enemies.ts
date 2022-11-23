@@ -13,7 +13,7 @@ import { checkCircularAreaCollision } from "../../objectMovement/objectCollision
 import { lengthBetweenPoints } from "../../objectMovement/objectMovement";
 import Projectiles from "../Projectiles";
 import { moveCharacters } from "../../characterMovement/characterMovement";
-import { MeleeAttackInstance } from "@websocketgame/shared/dist/types/meleeAttack";
+import MeleeAttacks from "../MeleeAttacks";
 
 export interface AreaRange {
   topLeftPointOfArea: Position;
@@ -39,7 +39,11 @@ export default class Enemies {
     this.enemies = enemies;
   };
 
-  performAction = (players: Player[], projectiles: Projectiles) => {
+  performAction = (
+    players: Player[],
+    projectiles: Projectiles,
+    meleeAttacks: MeleeAttacks
+  ) => {
     const newEnemies: Enemy[] = [];
     this.enemies.forEach((enemy) => {
       const newEnemy = { ...enemy };
@@ -72,26 +76,27 @@ export default class Enemies {
             Date.now() - lastTimeAttacked > cooldown * 1000
         );
 
-        const rangeAttacks = attacksOffCooldown.filter(
+        const rangeAttacksFiltered = attacksOffCooldown.filter(
           ({ type }) => type === EnemyAttackType.RANGE
         ) as EnemyRangeAttack[];
 
-        const meleeAttacks = attacksOffCooldown.filter(
+        const meleeAttacksFiltered = attacksOffCooldown.filter(
           ({ type }) => type === EnemyAttackType.MEELE
         ) as EnemyMeleeAttack[];
 
-        if (rangeAttacks.length) {
+        if (rangeAttacksFiltered.length) {
           performEnemyRangeAttack(
             projectiles.addProjectile,
-            rangeAttacks,
+            rangeAttacksFiltered,
             player.position,
             newEnemy
           );
-        } else if (meleeAttacks.length) {
-          const mockAddMeleeAttack = (meleeAttack: MeleeAttackInstance) => {
-            console.log(meleeAttack);
-          };
-          performEnemyMeleeAttack(mockAddMeleeAttack, meleeAttacks, newEnemy);
+        } else if (meleeAttacksFiltered.length) {
+          performEnemyMeleeAttack(
+            meleeAttacks.addMeleeAttack,
+            meleeAttacksFiltered,
+            newEnemy
+          );
         } else {
           newEnemy.destination = player.position;
         }

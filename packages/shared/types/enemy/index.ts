@@ -18,7 +18,6 @@ export interface EnemyAttack {
   type: EnemyAttackType;
   speed: number;
   range: number;
-  collisionRadius: number;
   attacksPerSecond: number;
   damage: number;
 }
