@@ -1,13 +1,19 @@
-import { getRandomSpawnPointInArea, sortByClosestPlayer } from "./helpers";
+import {
+  EnemyMeleeAttack,
+  EnemyRangeAttack,
+  getRandomSpawnPointInArea,
+  performEnemyMeleeAttack,
+  performEnemyRangeAttack,
+  sortByClosestPlayer,
+} from "./helpers";
 import { Position } from "@websocketgame/shared/dist/types/position";
 import { Enemy, EnemyAttackType } from "@websocketgame/shared/dist/types/enemy";
 import { Player } from "@websocketgame/shared/dist/types/player";
 import { checkCircularAreaCollision } from "../../objectMovement/objectCollision";
 import { lengthBetweenPoints } from "../../objectMovement/objectMovement";
 import Projectiles from "../Projectiles";
-import { v4 } from "uuid";
-import { ProjectileSource } from "@websocketgame/shared/dist/types/projectile";
 import { moveCharacters } from "../../characterMovement/characterMovement";
+import { MeleeAttackInstance } from "@websocketgame/shared/dist/types/meleeAttack";
 
 export interface AreaRange {
   topLeftPointOfArea: Position;
@@ -66,31 +72,27 @@ export default class Enemies {
             Date.now() - lastTimeAttacked > cooldown * 1000
         );
 
-        if (
-          attacksOffCooldown.length &&
-          attacksOffCooldown[0].type === EnemyAttackType.RANGE
-        ) {
-          //TODO: temporarily i will trigger only first range attack
-          const { speed, collisionRadius, range, id, damage } =
-            attacksOffCooldown[0];
-          projectiles.addProjectile({
-            position: enemy.position,
-            speed,
-            destination: player.position,
-            id: v4(),
-            damage,
-            range,
-            initialPosition: enemy.position,
-            collisionRadius,
-            ownerId: enemy.id,
-            durability: 1,
-            source: ProjectileSource.ENEMY,
-          });
-          newEnemy.attacks[
-            newEnemy.attacks.findIndex((attack) => attack.id === id)
-          ].lastTimeAttacked = Date.now();
+        const rangeAttacks = attacksOffCooldown.filter(
+          ({ type }) => type === EnemyAttackType.RANGE
+        ) as EnemyRangeAttack[];
+
+        const meleeAttacks = attacksOffCooldown.filter(
+          ({ type }) => type === EnemyAttackType.MEELE
+        ) as EnemyMeleeAttack[];
+
+        if (rangeAttacks.length) {
+          performEnemyRangeAttack(
+            projectiles.addProjectile,
+            rangeAttacks,
+            player.position,
+            newEnemy
+          );
+        } else if (meleeAttacks.length) {
+          const mockAddMeleeAttack = (meleeAttack: MeleeAttackInstance) => {
+            console.log(meleeAttack);
+          };
+          performEnemyMeleeAttack(mockAddMeleeAttack, meleeAttacks, newEnemy);
         } else {
-          //TODO: later add logic for choosing attacks available etc
           newEnemy.destination = player.position;
         }
       }

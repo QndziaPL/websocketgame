@@ -10,23 +10,23 @@ import {
 import { Player } from "@websocketgame/shared/dist/types/player";
 import { Position } from "@websocketgame/shared/dist/types/position";
 import { lengthBetweenPoints } from "../../objectMovement/objectMovement";
+import {
+  Projectile,
+  ProjectileSource,
+} from "@websocketgame/shared/dist/types/projectile";
+import { BasicBowAttack, BasicMeleeAttack } from "./attacks";
+import {
+  MeleeAttackInstance,
+  MeleeAttackSource,
+} from "@websocketgame/shared/dist/types/meleeAttack";
 
 export const addTestEnemy = (): Enemy => {
   const hp = randomNumberBetween(3, 6);
   const exp = randomNumberBetween(5, 10);
+
   const attacks: EnemyAttack[] = [
-    {
-      id: "1",
-      name: "Basic arrow",
-      cooldown: 3,
-      lastTimeAttacked: 0,
-      type: EnemyAttackType.RANGE,
-      speed: 2,
-      range: 300,
-      collisionRadius: 2,
-      attacksPerSecond: 0.3,
-      damage: 3,
-    },
+    { ...BasicBowAttack },
+    { ...BasicMeleeAttack },
   ];
   return {
     position: { x: 0, y: 0 },
@@ -82,4 +82,65 @@ export const sortByClosestPlayer = (
     return -1;
   }
   return 0;
+};
+
+export type EnemyRangeAttack = Omit<EnemyAttack, "type"> & {
+  type: EnemyAttackType.RANGE;
+};
+
+export const performEnemyRangeAttack = (
+  addProjectile: (projectile: Projectile) => void,
+  rangeAttacks: EnemyRangeAttack[],
+  destination: Position,
+  newCopyOfEnemy: Enemy
+) => {
+  const { speed, damage, range, collisionRadius, id } =
+    rangeAttacks[randomNumberBetween(rangeAttacks.length - 1)];
+
+  addProjectile({
+    position: newCopyOfEnemy.position,
+    speed,
+    destination,
+    id: v4(),
+    damage,
+    range,
+    initialPosition: newCopyOfEnemy.position,
+    collisionRadius,
+    ownerId: newCopyOfEnemy.id,
+    durability: 1,
+    source: ProjectileSource.ENEMY,
+  });
+
+  newCopyOfEnemy.attacks[
+    newCopyOfEnemy.attacks.findIndex((attack) => attack.id === id)
+  ].lastTimeAttacked = Date.now();
+};
+
+export type EnemyMeleeAttack = Omit<EnemyAttack, "type"> & {
+  type: EnemyAttackType.MEELE;
+};
+
+export const performEnemyMeleeAttack = (
+  addMeleeAttack: (meleeAttack: MeleeAttackInstance) => void,
+  meleeAttacks: EnemyMeleeAttack[],
+  newCopyOfEnemy: Enemy
+) => {
+  const { speed, damage, range, id } =
+    meleeAttacks[randomNumberBetween(meleeAttacks.length - 1)];
+
+  addMeleeAttack({
+    id: v4(),
+    position: newCopyOfEnemy.position,
+    speed,
+    damage,
+    range,
+    ownerId: newCopyOfEnemy.id,
+    source: MeleeAttackSource.ENEMY,
+  });
+
+  newCopyOfEnemy.attacks[
+    newCopyOfEnemy.attacks.findIndex((attack) => attack.id === id)
+  ].lastTimeAttacked = Date.now();
+
+  console.log(`using melee attack with damage ${damage} and range ${range}`);
 };
